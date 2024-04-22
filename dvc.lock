@@ -1,0 +1,15 @@
+schema: '2.0'
+stages:
+  download_dataset_v2:
+    cmd: ./scripts/data/download.sh
+    deps:
+    - path: ./scripts/data/download.sh
+      hash: md5
+      md5: e7638785505a3b0818b8a7cd964948b4
+      size: 379
+    outs:
+    - path: ./data/01_raw/DS-71c1fd51-v2
+      hash: md5
+      md5: f3c759e0870c1fc460ed7474ef672ff7.dir
+      size: 2546845146
+      nfiles: 15985
