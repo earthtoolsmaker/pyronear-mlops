@@ -1,0 +1,7 @@
+stages:
+  download_dataset_v2:
+    cmd: ./scripts/data/download.sh
+    deps:
+      - ./scripts/data/download.sh
+    outs:
+      - ./data/01_raw/DS-71c1fd51-v2
