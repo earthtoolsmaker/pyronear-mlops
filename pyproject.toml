@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "pyronear-mlops"
+version = "0.1.0"
+description = ""
+authors = ["Arthur Caillau <arthur@caillau.me>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ultralytics = "^8.2.2"
+torch = "^2.2.2"
+torchvision = "^0.17.2"
+pandas = "^2.2.2"
+
+
+[tool.poetry.group.dev.dependencies]
+dvc = "^3.50.0"
+mlflow = "^2.12.1"
+ipython = "^8.23.0"
+black = "^24.4.0"
+isort = "^5.13.2"
+mypy = "^1.9.0"
+flake8 = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
