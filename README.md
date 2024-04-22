@@ -73,6 +73,21 @@ Install python dependencies
 poetry install
 ```
 
+#### Data Dependencies
+
+To get the data dependencies one can use DVC - To fully use this
+repository you would need access to our DVC remote storage which is
+currently reserved for Pyronear members.
+
+Once setup, run the following command:
+
+```sh
+dvc pull
+```
+
+___Note:___ To download the dataset used to train the models, use the
+following command: `./scripts/data/download.sh`.
+
 ## Project structure and conventions
 
 The project is organized following mostly the [cookie-cutter-datascience
@@ -89,9 +104,12 @@ The library code is available under the `pyronear_mlops` folder.
 
 ### Notebooks
 
-The notebooks live in the `notebooks` folder and are also keyed by the project
-names.
-They should live in Git Large File Storage
+The notebooks live in the `notebooks` folder. They are automatically synced to the Git LFS storage.
+Please follow [this
+convention](https://drivendata.github.io/cookiecutter-data-science/#notebooks-are-for-exploration-and-communication)
+to name your Notebooks.
+
+`<step>-<ghuser>-<description>.ipynb` - e.g., `0.3-mateo-visualize-distributions.ipynb`.
 
 ### Scripts
 
@@ -99,18 +117,13 @@ The scripts live in the `scripts` folder, they are
 commonly CLI interfaces to the library
 code.
 
-### Makefile
-
-A Makefile makes it easy to prepare commands and execute them in a DAG fashion.
-
 ## DVC
 
-DVC is used to track and define data pipelines and make them reproducible. See `dvc.yaml`.
+DVC is used to track and define data pipelines and make them
+reproducible. See `dvc.yaml`.
 
 ## MLFlow
 
-An MLFlow server is running when running
-ML experiments to track hyperparameters
-and performances and to streamline model
+An MLFlow server is running when running ML experiments to track
+hyperparameters and performances and to streamline model
 selection.
-
