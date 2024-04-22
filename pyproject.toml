@@ -11,6 +11,7 @@ ultralytics = "^8.2.2"
 torch = "^2.2.2"
 torchvision = "^0.17.2"
 pandas = "^2.2.2"
+gdown = "^5.1.0"
 
 
 [tool.poetry.group.dev.dependencies]

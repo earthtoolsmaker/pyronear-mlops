@@ -1,2 +1,5 @@
 [core]
     analytics = false
+    remote = remote_storage
+['remote "remote_storage"']
+    url = /tmp/dvc/pyronear_mlops/
