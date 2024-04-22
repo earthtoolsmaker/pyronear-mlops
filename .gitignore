@@ -1,2 +1,4 @@
 mlruns
 .mypy_cache
+yolov8.*.pt
+__pycache__

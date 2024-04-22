@@ -13,3 +13,22 @@ stages:
       md5: f3c759e0870c1fc460ed7474ef672ff7.dir
       size: 2546845146
       nfiles: 15985
+  build_model_input:
+    cmd: python ./scripts/data/model_input/build.py --input-dir ./data/01_raw/DS-71c1fd51-v2
+      --output-dir ./data/03_model_input/yolov8
+    deps:
+    - path: ./data/01_raw/DS-71c1fd51-v2
+      hash: md5
+      md5: f3c759e0870c1fc460ed7474ef672ff7.dir
+      size: 2546845146
+      nfiles: 15985
+    - path: ./scripts/data/model_input/build.py
+      hash: md5
+      md5: e09c7975ada93753e438edd728ca8590
+      size: 1836
+    outs:
+    - path: ./data/03_model_input/yolov8
+      hash: md5
+      md5: f3c759e0870c1fc460ed7474ef672ff7.dir
+      size: 2546845146
+      nfiles: 15985
