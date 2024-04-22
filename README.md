@@ -18,14 +18,11 @@ installed automatically
 
 ### Install
 
-#### Pipx
-
 #### Poetry
 
 Follow the [official documentation](https://python-poetry.org/docs/) to install `poetry`.
 
 #### Git LFS
-
 
 Make sure [`git-lfs`](https://git-lfs.com/) is installed on your system.
 
