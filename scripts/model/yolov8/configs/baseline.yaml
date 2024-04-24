@@ -1,0 +1,9 @@
+epochs: 5
+patience: 10
+batch: 64
+imgsz: [640, 480]
+model_type: yolov8n.pt
+close_mosaic: 0
+degrees: 0
+flipud: 0.0
+fliplr: 0.5

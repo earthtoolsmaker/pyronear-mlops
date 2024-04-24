@@ -1,0 +1,4 @@
+epochs: 200
+patience: 50
+batch: 64
+imgsz: 1024
