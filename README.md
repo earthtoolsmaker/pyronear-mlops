@@ -169,3 +169,13 @@ git checkout -b "<user>/<experiment-name>"
 
 3. Commit your changes and open a Pull Request to get your changes
    approved and merged.
+
+### Run Random Hyperparameter Search
+
+Use the following commands to run random hyperparameter search:
+
+```sh
+make run_hyperparameter_search
+```
+
+It will run 10 random training runs with hyperparameters drawn from the hyperparameter space defined in `pyronear_mlops/model/yolov8/hyperparameters.py`
