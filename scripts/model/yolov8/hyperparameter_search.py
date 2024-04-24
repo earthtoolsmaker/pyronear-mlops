@@ -1,48 +1,102 @@
+"""Script to run random hyperparameter search for training a YOLOv8s model the
+object detection task of fire smokes."""
+import argparse
+import logging
 import random
+import shutil
+import sys
+import uuid
+from datetime import datetime
+from pathlib import Path
 
-import numpy as np
+from ultralytics import settings
 
-# Config documentation: https://docs.ultralytics.com/usage/cfg/#train-settings
-space = {
-    "epochs": np.linspace(50, 200, 20, dtype=int),
-    "patience": np.linspace(10, 50, 10, dtype=int),
-    "imgsz": [320, 640, 1024],
-    "batch": [16, 32, 64],
-    "optimizer": [
-        "SGD",
-        "Adam",
-        "AdamW",
-        "NAdam",
-        "RAdam",
-        "RMSProp",
-        "auto",
-    ],
-    # Learning rates
-    "lr0": np.logspace(
-        np.log10(0.0001),
-        np.log10(0.03),
-        base=10,
-        num=50,
-    ),
-    "lrf": np.logspace(
-        np.log10(0.001),
-        np.log10(0.01),
-        base=10,
-        num=50,
-    ),
-    # Data Augmentation
-    "mixup": [0, 0.2],
-    "close_mosaic": np.linspace(0, 35, 10, dtype=int),
-    "degrees": np.linspace(0, 10, 10),
-    "translate": np.linspace(0, 0.4, 10),
-}
+from pyronear_mlops.data.utils import yaml_read
+from pyronear_mlops.model.yolov8 import hyperparameters
+from pyronear_mlops.model.yolov8.train import load_pretrained_model, train
 
 
-def draw_configuration(space: dict, random_seed: int = 0) -> dict:
-    """Draws a configuration from the space using the provided
-    `random_seed`."""
-    random.seed(random_seed)
-    return {k: random.choice(v) for k, v in space.items()}
+def make_cli_parser() -> argparse.ArgumentParser:
+    """Makes the CLI parser."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--data",
+        help="filepath to the data_yaml config file for the dataset",
+        default="./data/03_model_input/yolov8/small/datasets/data.yaml",
+        type=Path,
+    )
+    parser.add_argument(
+        "--output-dir",
+        help="path to save the model_artifacts",
+        default="./data/04_models/yolov8/",
+        type=Path,
+    )
+    parser.add_argument(
+        "--experiment-name",
+        help="experiment name",
+        default="random_hyperparameter_search",
+        type=str,
+    )
+    parser.add_argument(
+        "--n",
+        help="number of random configurations to run",
+        default=10,
+        type=int,
+    )
+    parser.add_argument(
+        "-log",
+        "--loglevel",
+        default="warning",
+        help="Provide logging level. Example --loglevel debug, default=warning",
+    )
+    return parser
 
 
-# draw_configuration(space, random_seed=42)
+def validate_parsed_args(args: dict) -> bool:
+    """Returns whether the parsed args are valid."""
+    if not args["data"].exists():
+        logging.error("Invalid --data filepath does not exist")
+        return False
+    else:
+        return True
+
+
+if __name__ == "__main__":
+    cli_parser = make_cli_parser()
+    args = vars(cli_parser.parse_args())
+    logging.basicConfig(level=args["loglevel"].upper())
+    if not validate_parsed_args(args):
+        logging.error(f"Could not validate the parsed args: {args}")
+        exit(1)
+    else:
+        logging.info(args)
+        n = args["n"]
+        random_seed = datetime.now().timestamp()
+        logging.info(f"Initializing random seed: {random_seed}")
+        random.seed(random_seed)
+
+        configurations = hyperparameters.draw_n_random_configurations(
+            space=hyperparameters.space,
+            n=n,
+            random_seed=random_seed,
+        )
+
+        # Update ultralytics settings to log with MLFlow
+        settings.update({"mlflow": True})
+
+        for configuration in configurations:
+            run_id = uuid.uuid4().hex
+            logging.info(
+                f"Starting train run with the following configuration: {configuration}"
+            )
+            logging.info(f"uuid: {run_id}")
+            logging.info(f"loading pretrained model: {configuration['model_type']}")
+            model = load_pretrained_model(configuration["model_type"])
+            train(
+                model=model,
+                data_yaml_path=args["data"],
+                params=configuration,
+                project=str(args["output_dir"]),
+                experiment_name=f"{args['experiment_name']}_{run_id}",
+            )
+        exit(0)
