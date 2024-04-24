@@ -6,7 +6,14 @@ stages:
     outs:
       - ./data/01_raw/DS-71c1fd51-v2
   build_model_input:
-    cmd: python ./scripts/data/model_input/build.py --input-dir ./data/01_raw/DS-71c1fd51-v2 --output-dir ./data/03_model_input/yolov8
+    cmd:
+      - >-
+        python ./scripts/data/model_input/build.py
+        --input-dir ./data/01_raw/DS-71c1fd51-v2
+        --output-dir ./data/03_model_input/yolov8
+        --random-seed 0
+        --sampling-ratio 0.05
+        --loglevel info
     deps:
       - ./scripts/data/model_input/build.py
       - ./data/01_raw/DS-71c1fd51-v2
