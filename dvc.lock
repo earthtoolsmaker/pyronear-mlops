@@ -26,11 +26,11 @@ stages:
       nfiles: 15985
     - path: ./scripts/data/model_input/build.py
       hash: md5
-      md5: df00d5c4649c39a9e6504a14f5a108f5
-      size: 8402
+      md5: ec2df4b4e3d1462eef5c8e893b195553
+      size: 6527
     outs:
     - path: ./data/03_model_input/yolov8
       hash: md5
-      md5: 7489d6e425c46919e6cdd46fb4b5beac.dir
+      md5: b1c9fd54075957904523f8577a2b03aa.dir
       size: 2672031596
       nfiles: 16785

@@ -81,11 +81,11 @@ def make_yolov8_folder_structure(dir: Path) -> None:
         ├── images
         └── labels
     """
-    os.makedirs(dir, exist_ok=True)
+    os.makedirs(dir / "datasets", exist_ok=True)
 
     for split in ["train", "val", "test"]:
-        os.makedirs(dir / split / "images", exist_ok=True)
-        os.makedirs(dir / split / "labels", exist_ok=True)
+        os.makedirs(dir / "datasets" / split / "images", exist_ok=True)
+        os.makedirs(dir / "datasets" / split / "labels", exist_ok=True)
 
 
 def copy_data(input_dir: Path, output_dir: Path) -> None:
@@ -185,8 +185,8 @@ if __name__ == "__main__":
         dir_full = output_dir / "full"
         logging.info(f"creating the full dataset located at {dir_full}")
         make_yolov8_folder_structure(dir_full)
-        copy_data(input_dir=input_dir, output_dir=dir_full)
-        write_data_yaml(dir_full / "data.yaml")
+        copy_data(input_dir=input_dir, output_dir=dir_full / "datasets")
+        write_data_yaml(dir_full / "datasets" / "data.yaml")
 
         dir_small = output_dir / "small"
         logging.info(f"creating the small dataset located at {dir_small}")
@@ -194,11 +194,11 @@ if __name__ == "__main__":
         run_file_copy(
             sample_dataset(
                 input_dir=input_dir,
-                output_dir=dir_small,
+                output_dir=dir_small / "datasets",
                 sampling_ratio=sampling_ratio,
                 random_seed=random_seed,
             )
         )
-        write_data_yaml(dir_small / "data.yaml")
+        write_data_yaml(dir_small / "datasets" / "data.yaml")
 
         exit(0)
