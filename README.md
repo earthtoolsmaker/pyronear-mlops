@@ -1,6 +1,8 @@
-# Pyronear: MLOps
+# Pyronear: Machine Learning Pipeline for Wildfire Detection 🔥
 
-Machine Learning for Wildfire Detection.
+![Pyronear Logo](./docs/assets/images/pyronear_logo.png)
+
+Machine Learning Pipeline for Wildfire Detection.
 
 ![Pipeline Overview](./docs/assets/images/pipeline.png)
 
