@@ -11,7 +11,6 @@ fix:
 	black .
 
 mlflow_start:
-	# mlflow ui --port 5000
 	mlflow server --backend-store-uri runs/mlflow
 
 mlflow_stop:
@@ -20,7 +19,7 @@ mlflow_stop:
 
 run_hyperparameter_search:
 	python ./scripts/model/yolov8/hyperparameter_search.py \
-	  --data ./data/03_model_input/yolov8/small/datasets/data.yaml \
+	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
 	  --output-dir ./data/04_models/yolov8/ \
 	  --experiment-name "random_hyperparameter_search" \
 	  --n 10 \
