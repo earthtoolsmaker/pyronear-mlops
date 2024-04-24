@@ -51,11 +51,11 @@ stages:
       size: 125
     - path: ./scripts/model/yolov8/train.py
       hash: md5
-      md5: cbadb1b32505fe0503edabd026b99eaa
-      size: 2579
+      md5: 8cd2a97e9c69c230732af20463ed629b
+      size: 2713
     outs:
-    - path: ./data/04_models/yolov8/baseline_small_dataset
+    - path: ./data/04_models/yolov8/baseline_small_dataset/
       hash: md5
-      md5: 4fdfbd2bae444d9270828c84bd486e0d.dir
+      md5: d832bd52526d1808561ae5c0e1d36c22.dir
       size: 17323357
       nfiles: 22

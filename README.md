@@ -122,8 +122,50 @@ code.
 DVC is used to track and define data pipelines and make them
 reproducible. See `dvc.yaml`.
 
+To get an overview of the pipeline DAG:
+
+```sh
+dvc dag
+```
+
+To run the full pipeline:
+
+```sh
+dvc repro
+```
+
 ## MLFlow
 
 An MLFlow server is running when running ML experiments to track
 hyperparameters and performances and to streamline model
 selection.
+
+To start the mlflow UI server, run the following command:
+
+```sh
+make mlflow_start
+```
+
+To stop the mlflow UI server, run the following command:
+
+```sh
+make mlflow_stop
+```
+
+To browse the different runs, open your browser and navigate to the URL: [http://localhost:5000](http://localhost:5000)
+
+## Contribute to the project
+
+### New ML experiments
+
+1. Work on a separate git branch:
+
+```sh
+git checkout -b "<user>/<experiment-name>"
+```
+
+2. Modify and iterate on the code, then run `dvc repro`. It will rerun
+   parts of the pipeline that have been updated.
+
+3. Commit your changes and open a Pull Request to get your changes
+   approved and merged.
