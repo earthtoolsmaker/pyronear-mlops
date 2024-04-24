@@ -3,8 +3,6 @@ object detection task of fire smokes."""
 import argparse
 import logging
 import random
-import shutil
-import sys
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -89,7 +87,6 @@ if __name__ == "__main__":
             logging.info(
                 f"Starting train run with the following configuration: {configuration}"
             )
-            logging.info(f"uuid: {run_id}")
             logging.info(f"loading pretrained model: {configuration['model_type']}")
             model = load_pretrained_model(configuration["model_type"])
             train(
