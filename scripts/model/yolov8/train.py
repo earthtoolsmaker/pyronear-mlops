@@ -5,6 +5,8 @@ import logging
 import shutil
 from pathlib import Path
 
+from ultralytics import settings
+
 from pyronear_mlops.data.utils import yaml_read
 from pyronear_mlops.model.yolov8.train import load_pretrained_model, train
 
@@ -73,6 +75,9 @@ if __name__ == "__main__":
         model = load_pretrained_model(model_type)
         # Cleaning the train run directory
         shutil.rmtree(args["output_dir"] / args["experiment_name"], ignore_errors=True)
+
+        # Update ultralytics settings to log with MLFlow
+        settings.update({"mlflow": True})
 
         train(
             model=model,
