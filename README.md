@@ -2,6 +2,8 @@
 
 Machine Learning for Wildfire Detection.
 
+![Pipeline Overview](./docs/assets/images/pipeline.png)
+
 ## Setup
 
 ### Dependencies
@@ -87,6 +89,8 @@ dvc pull
 
 ___Note:___ To download the dataset used to train the models, use the
 following command: `./scripts/data/download.sh`.
+
+![Random batch sample from the dataset](./docs/assets/images/batch.jpg)
 
 ## Project structure and conventions
 
