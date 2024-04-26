@@ -5,5 +5,5 @@ __pycache__
 runs
 data/04_models/yolov8/random_hyperparameter_search_*
 data/04_models/yolov9/random_hyperparameter_search_*
-data/01_raw/DS_fp.zip
+data/01_raw/DS_fp/
 data/06_reporting/yolov8/
