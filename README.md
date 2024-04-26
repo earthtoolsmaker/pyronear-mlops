@@ -110,7 +110,8 @@ The library code is available under the `pyronear_mlops` folder.
 
 ### Notebooks
 
-The notebooks live in the `notebooks` folder. They are automatically synced to the Git LFS storage.
+The notebooks live in the `notebooks` folder. They are automatically synced to
+the Git LFS storage.
 Please follow [this
 convention](https://drivendata.github.io/cookiecutter-data-science/#notebooks-are-for-exploration-and-communication)
 to name your Notebooks.
@@ -158,21 +159,18 @@ To stop the mlflow UI server, run the following command:
 make mlflow_stop
 ```
 
-To browse the different runs, open your browser and navigate to the URL: [http://localhost:5000](http://localhost:5000)
+To browse the different runs, open your browser and navigate to the URL:
+[http://localhost:5000](http://localhost:5000)
 
 ## Contribute to the project
 
 ### New ML experiments
 
-1. Work on a separate git branch:
+Follow the steps:
 
-```sh
-git checkout -b "<user>/<experiment-name>"
-```
-
+1. Work on a separate git branch: `git checkout -b "<user>/<experiment-name>"`
 2. Modify and iterate on the code, then run `dvc repro`. It will rerun
    parts of the pipeline that have been updated.
-
 3. Commit your changes and open a Pull Request to get your changes
    approved and merged.
 
@@ -186,7 +184,9 @@ Use the following commands to run random hyperparameter search:
 make run_yolov8_hyperparameter_search
 ```
 
-It will run 10 random training runs with hyperparameters drawn from the hyperparameter space defined in `pyronear_mlops/model/yolo/hyperparameters/yolov8.py`
+It will run 10 random training runs with hyperparameters drawn from the
+hyperparameter space defined in
+`pyronear_mlops/model/yolo/hyperparameters/yolov8.py`
 
 #### YOLOv9
 
@@ -196,4 +196,6 @@ Use the following commands to run random hyperparameter search:
 make run_yolov9_hyperparameter_search
 ```
 
-It will run 10 random training runs with hyperparameters drawn from the hyperparameter space defined in `pyronear_mlops/model/yolo/hyperparameters/yolov9.py`
+It will run 10 random training runs with hyperparameters drawn from the
+hyperparameter space defined in
+`pyronear_mlops/model/yolo/hyperparameters/yolov9.py`
