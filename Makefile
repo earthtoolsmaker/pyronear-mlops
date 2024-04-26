@@ -32,3 +32,9 @@ run_yolov9_hyperparameter_search:
 	  --experiment-name "random_hyperparameter_search" \
 	  --n 10 \
 	  --loglevel "info"
+
+yolov8_benchmark:
+	python ./scripts/model/yolov8/benchmark.py \
+	  --input-dir ./data/04_models/yolov8/ \
+	  --output-dir ./data/06_reporting/yolov8/ \
+	  --loglevel "info"
