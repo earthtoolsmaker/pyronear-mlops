@@ -24,3 +24,11 @@ run_yolov8_hyperparameter_search:
 	  --experiment-name "random_hyperparameter_search" \
 	  --n 10 \
 	  --loglevel "info"
+
+run_yolov9_hyperparameter_search:
+	python ./scripts/model/yolov9/hyperparameter_search.py \
+	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
+	  --output-dir ./data/04_models/yolov9/ \
+	  --experiment-name "random_hyperparameter_search" \
+	  --n 10 \
+	  --loglevel "info"
