@@ -17,7 +17,7 @@ mlflow_stop:
 	ps aux | grep 'mlflow' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
 
-run_hyperparameter_search:
+run_yolov8_hyperparameter_search:
 	python ./scripts/model/yolov8/hyperparameter_search.py \
 	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
 	  --output-dir ./data/04_models/yolov8/ \

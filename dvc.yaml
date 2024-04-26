@@ -19,7 +19,7 @@ stages:
       - ./data/01_raw/DS-71c1fd51-v2
     outs:
       - ./data/03_model_input/yolov8
-  train_baseline_small_dataset:
+  train_yolov8_baseline_small_dataset:
     cmd:
       - >-
         python ./scripts/model/yolov8/train.py
@@ -33,7 +33,7 @@ stages:
       - ./data/03_model_input/yolov8
     outs:
       - ./data/04_models/yolov8/baseline_small_dataset/
-  train_baseline_full_dataset:
+  train_yolov8_baseline_full_dataset:
     cmd:
       - >-
         python ./scripts/model/yolov8/train.py
@@ -47,3 +47,31 @@ stages:
       - ./data/03_model_input/yolov8
     outs:
       - ./data/04_models/yolov8/baseline_full_dataset
+  train_yolov9_baseline_small_dataset:
+    cmd:
+      - >-
+        python ./scripts/model/yolov9/train.py
+        --data ./data/03_model_input/yolov8/small/datasets/data.yaml
+        --config ./scripts/model/yolov9/configs/baseline.yaml
+        --experiment-name baseline_small_dataset
+        --loglevel info
+    deps:
+      - ./scripts/model/yolov9/train.py
+      - ./scripts/model/yolov9/configs/baseline.yaml
+      - ./data/03_model_input/yolov8
+    outs:
+      - ./data/04_models/yolov9/baseline_small_dataset/
+  train_yolov9_baseline_full_dataset:
+    cmd:
+      - >-
+        python ./scripts/model/yolov9/train.py
+        --data ./data/03_model_input/yolov8/full/datasets/data.yaml
+        --config ./scripts/model/yolov9/configs/baseline.yaml
+        --experiment-name baseline_full_dataset
+        --loglevel info
+    deps:
+      - ./scripts/model/yolov9/train.py
+      - ./scripts/model/yolov9/configs/baseline.yaml
+      - ./data/03_model_input/yolov8
+    outs:
+      - ./data/04_models/yolov9/baseline_full_dataset

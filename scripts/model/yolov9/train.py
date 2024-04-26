@@ -1,16 +1,14 @@
-"""Script to run random hyperparameter search for training a YOLOv8s model the
-object detection task of fire smokes."""
+"""Script to train a YOLOv9 model input for the object detection task of fire
+smokes."""
 
 import argparse
 import logging
-import random
-import uuid
-from datetime import datetime
+import shutil
 from pathlib import Path
 
 from ultralytics import settings
 
-import pyronear_mlops.model.yolo.hyperparameters.yolov8 as hyperparameters
+from pyronear_mlops.data.utils import yaml_read
 from pyronear_mlops.model.yolo.train import load_pretrained_model, train
 
 
@@ -20,26 +18,26 @@ def make_cli_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--data",
         help="filepath to the data_yaml config file for the dataset",
-        default="./data/03_model_input/yolov8/small/datasets/data.yaml",
+        default="./data/03_model_input/yolov9/small/datasets/data.yaml",
         type=Path,
     )
     parser.add_argument(
         "--output-dir",
         help="path to save the model_artifacts",
-        default="./data/04_models/yolov8/",
+        default="./data/04_models/yolov9/",
         type=Path,
     )
     parser.add_argument(
         "--experiment-name",
         help="experiment name",
-        default="random_hyperparameter_search",
+        default="my_experiment",
         type=str,
     )
     parser.add_argument(
-        "--n",
-        help="number of random configurations to run",
-        default=10,
-        type=int,
+        "--config",
+        help="Yaml configuration file to train the model on",
+        required=True,
+        type=Path,
     )
     parser.add_argument(
         "-log",
@@ -55,6 +53,9 @@ def validate_parsed_args(args: dict) -> bool:
     if not args["data"].exists():
         logging.error("Invalid --data filepath does not exist")
         return False
+    elif not args["config"].exists():
+        logging.error("Invalid --config filepath does not exist")
+        return False
     else:
         return True
 
@@ -68,32 +69,22 @@ if __name__ == "__main__":
         exit(1)
     else:
         logging.info(args)
-        n = args["n"]
-        random_seed = datetime.now().timestamp()
-        logging.info(f"Initializing random seed: {random_seed}")
-        random.seed(random_seed)
-
-        configurations = hyperparameters.draw_n_random_configurations(
-            space=hyperparameters.space,
-            n=n,
-            random_seed=random_seed,
-        )
+        params = yaml_read(args["config"])
+        logging.info(f"Parsed run params: {params}")
+        model_type = params["model_type"]
+        logging.info(f"Loading model: {model_type}")
+        model = load_pretrained_model(model_type)
+        # Cleaning the train run directory
+        shutil.rmtree(args["output_dir"] / args["experiment_name"], ignore_errors=True)
 
         # Update ultralytics settings to log with MLFlow
         settings.update({"mlflow": True})
 
-        for configuration in configurations:
-            run_id = uuid.uuid4().hex
-            logging.info(
-                f"Starting train run with the following configuration: {configuration}"
-            )
-            logging.info(f"loading pretrained model: {configuration['model_type']}")
-            model = load_pretrained_model(configuration["model_type"])
-            train(
-                model=model,
-                data_yaml_path=args["data"],
-                params=configuration,
-                project=str(args["output_dir"]),
-                experiment_name=f"{args['experiment_name']}_{run_id}",
-            )
+        train(
+            model=model,
+            data_yaml_path=args["data"],
+            params=params,
+            project=str(args["output_dir"]),
+            experiment_name=args["experiment_name"],
+        )
         exit(0)

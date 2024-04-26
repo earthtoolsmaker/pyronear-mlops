@@ -1,0 +1,3 @@
+epochs: 50
+imgsz: 640
+model_type: yolov9c.pt

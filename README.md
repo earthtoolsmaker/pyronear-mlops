@@ -181,7 +181,7 @@ git checkout -b "<user>/<experiment-name>"
 Use the following commands to run random hyperparameter search:
 
 ```sh
-make run_hyperparameter_search
+make run_yolov8_hyperparameter_search
 ```
 
 It will run 10 random training runs with hyperparameters drawn from the hyperparameter space defined in `pyronear_mlops/model/yolov8/hyperparameters.py`

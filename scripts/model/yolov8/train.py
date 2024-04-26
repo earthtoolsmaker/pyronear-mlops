@@ -1,5 +1,6 @@
 """Script to train a YOLOv8 model input for the object detection task of fire
 smokes."""
+
 import argparse
 import logging
 import shutil
@@ -8,7 +9,7 @@ from pathlib import Path
 from ultralytics import settings
 
 from pyronear_mlops.data.utils import yaml_read
-from pyronear_mlops.model.yolov8.train import load_pretrained_model, train
+from pyronear_mlops.model.yolo.train import load_pretrained_model, train
 
 
 def make_cli_parser() -> argparse.ArgumentParser:

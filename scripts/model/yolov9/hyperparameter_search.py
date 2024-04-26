@@ -1,4 +1,4 @@
-"""Script to run random hyperparameter search for training a YOLOv8s model the
+"""Script to run random hyperparameter search for training a YOLOv9 model the
 object detection task of fire smokes."""
 
 import argparse
@@ -10,7 +10,7 @@ from pathlib import Path
 
 from ultralytics import settings
 
-import pyronear_mlops.model.yolo.hyperparameters.yolov8 as hyperparameters
+import pyronear_mlops.model.yolo.hyperparameters.yolov9 as hyperparameters
 from pyronear_mlops.model.yolo.train import load_pretrained_model, train
 
 
@@ -20,13 +20,19 @@ def make_cli_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--data",
         help="filepath to the data_yaml config file for the dataset",
-        default="./data/03_model_input/yolov8/small/datasets/data.yaml",
+        default="./data/03_model_input/yolov9/small/datasets/data.yaml",
         type=Path,
     )
     parser.add_argument(
         "--output-dir",
         help="path to save the model_artifacts",
-        default="./data/04_models/yolov8/",
+        default="./data/04_models/yolov9/",
+        type=Path,
+    )
+    parser.add_argument(
+        "--output-dir",
+        help="path to save the model_artifacts",
+        default="./data/04_models/yolov9/",
         type=Path,
     )
     parser.add_argument(
