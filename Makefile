@@ -1,4 +1,5 @@
-.PHONY: check fix
+.PHONY: check fix mlflow_start mlflow_stop run_yolov8_hyperparameter_search
+	run_yolov9_hyperparameter_search yolov8_benchmark yolov9_benchmark
 
 check:
 	isort --check .
