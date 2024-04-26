@@ -4,3 +4,4 @@ yolov*.pt
 __pycache__
 runs
 data/04_models/yolov8/random_hyperparameter_search_*
+data/04_models/yolov9/random_hyperparameter_search_*
