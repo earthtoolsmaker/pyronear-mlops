@@ -199,3 +199,17 @@ make run_yolov9_hyperparameter_search
 It will run 10 random training runs with hyperparameters drawn from the
 hyperparameter space defined in
 `pyronear_mlops/model/yolo/hyperparameters/yolov9.py`
+
+### Generate a benchmark CSV file
+
+#### YOLOv8
+
+```sh
+make yolov8_benchmark
+```
+
+#### YOLOv9
+
+```sh
+make yolov9_benchmark
+```

@@ -38,3 +38,9 @@ yolov8_benchmark:
 	  --input-dir ./data/04_models/yolov8/ \
 	  --output-dir ./data/06_reporting/yolov8/ \
 	  --loglevel "info"
+
+yolov9_benchmark:
+	python ./scripts/model/yolov8/benchmark.py \
+	  --input-dir ./data/04_models/yolov9/ \
+	  --output-dir ./data/06_reporting/yolov9/ \
+	  --loglevel "info"
