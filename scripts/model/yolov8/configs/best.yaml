@@ -1,13 +1,15 @@
+---
+model_type: yolov8s.pt
 epochs: 200
 patience: 100
 batch: 16
-model_type: yolov8s.pt
 imgsz: 1024
-optimizer: RAdam
-lr0: 0.001294723079942415
-lrf: 0.005179474679231213
-degrees: 2.2222222222222223
-translate: 0.17777777777777778
-fliplr: 0.5
+lr0: 0.013281489698569585
+lrf: 0.0015264179671752333
+optimizer: auto
 mixup: 0.2
-close_mosaic: 35
+close_mosaic: 3
+degrees: 7.777777777777779
+translate: 0.08888888888888889
+flipud: 0.0
+fliplr: 0.5
