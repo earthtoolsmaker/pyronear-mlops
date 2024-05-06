@@ -1,5 +1,7 @@
 ---
+# Model type: yolov8n, yolov8s, yolov8m, etc
 model_type: yolov8s.pt
+# Hyperparameters: the best combination was found by performing random hyperparameter search
 epochs: 200
 patience: 100
 batch: 16
