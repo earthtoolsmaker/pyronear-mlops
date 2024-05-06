@@ -60,4 +60,4 @@ stages:
       - ./scripts/model/yolov8/configs/baseline.yaml
       - ./data/03_model_input/yolov8
     outs:
-      - ./data/04_models/yolov8/baseline_full_dataset
+      - ./data/04_models/yolov8/best
