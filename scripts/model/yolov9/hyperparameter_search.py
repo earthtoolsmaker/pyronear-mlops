@@ -30,12 +30,6 @@ def make_cli_parser() -> argparse.ArgumentParser:
         type=Path,
     )
     parser.add_argument(
-        "--output-dir",
-        help="path to save the model_artifacts",
-        default="./data/04_models/yolov9/",
-        type=Path,
-    )
-    parser.add_argument(
         "--experiment-name",
         help="experiment name",
         default="random_hyperparameter_search",
