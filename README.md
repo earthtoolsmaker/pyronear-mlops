@@ -81,7 +81,8 @@ poetry install
 
 To get the data dependencies one can use DVC - To fully use this
 repository you would need access to our DVC remote storage which is
-currently reserved for Pyronear members.
+currently reserved for Pyronear members. On request, you will be provided with
+AWS credentials to access our remote storage.
 
 Once setup, run the following command:
 
@@ -89,10 +90,31 @@ Once setup, run the following command:
 dvc pull
 ```
 
-___Note:___ To download the dataset used to train the models, use the
-following command: `./scripts/data/download.sh`.
-
 ![Random batch sample from the dataset](./docs/assets/images/batch.jpg)
+
+##### Setup S3 access
+
+Create the following file `~/.aws/config`:
+
+```toml
+[profile pyronear]
+region = eu-west-3
+```
+
+Add your credentials in the file `~/.aws/credentials` - replace `XXX`
+with your access key id and your secret access key:
+
+```toml
+[pyronear]
+aws_access_key_id = XXX
+aws_secret_access_key = XXX
+```
+
+Make sure you use the AWS `pyronear` profile:
+
+```bash
+export AWS_PROFILE=pyronear
+```
 
 ## Project structure and conventions
 
