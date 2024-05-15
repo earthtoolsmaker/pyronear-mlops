@@ -1,5 +1,7 @@
 [core]
     analytics = false
-    remote = remote_storage
+    remote = pyronear-remote
 ['remote "remote_storage"']
     url = /tmp/dvc/pyronear_mlops/
+['remote "pyronear-remote"']
+    url = s3://pyronear-ml/dvc
