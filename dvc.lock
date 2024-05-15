@@ -31,9 +31,9 @@ stages:
     outs:
     - path: ./data/03_model_input/yolov8
       hash: md5
-      md5: b1c9fd54075957904523f8577a2b03aa.dir
-      size: 2672031596
-      nfiles: 16785
+      md5: 108cf58a8792ae87f00702d91f6ac499.dir
+      size: 2672166987
+      nfiles: 16787
   train_baseline_small_dataset:
     cmd:
     - python ./scripts/model/yolov8/train.py --data ./data/03_model_input/yolov8/small/datasets/data.yaml
@@ -59,3 +59,78 @@ stages:
       md5: d832bd52526d1808561ae5c0e1d36c22.dir
       size: 17323357
       nfiles: 22
+  train_yolov8_baseline_small_dataset:
+    cmd:
+    - python ./scripts/model/yolov8/train.py --data ./data/03_model_input/yolov8/small/datasets/data.yaml
+      --config ./scripts/model/yolov8/configs/baseline.yaml --experiment-name baseline_small_dataset
+      --loglevel info
+    deps:
+    - path: ./data/03_model_input/yolov8
+      hash: md5
+      md5: 108cf58a8792ae87f00702d91f6ac499.dir
+      size: 2672166987
+      nfiles: 16787
+    - path: ./scripts/model/yolov8/configs/baseline.yaml
+      hash: md5
+      md5: 8c4aa7ead4bdb4867706874182fcffad
+      size: 45
+    - path: ./scripts/model/yolov8/train.py
+      hash: md5
+      md5: 4bf950b3ef1abfc9a76004fc365b0626
+      size: 2712
+    outs:
+    - path: ./data/04_models/yolov8/baseline_small_dataset/
+      hash: md5
+      md5: 89b0dcfbe8204f5ad5bc8ab59cd6e388.dir
+      size: 18582481
+      nfiles: 25
+  train_yolov8_baseline_full_dataset:
+    cmd:
+    - python ./scripts/model/yolov8/train.py --data ./data/03_model_input/yolov8/full/datasets/data.yaml
+      --config ./scripts/model/yolov8/configs/baseline.yaml --experiment-name baseline_full_dataset
+      --loglevel info
+    deps:
+    - path: ./data/03_model_input/yolov8
+      hash: md5
+      md5: 108cf58a8792ae87f00702d91f6ac499.dir
+      size: 2672166987
+      nfiles: 16787
+    - path: ./scripts/model/yolov8/configs/baseline.yaml
+      hash: md5
+      md5: 8c4aa7ead4bdb4867706874182fcffad
+      size: 45
+    - path: ./scripts/model/yolov8/train.py
+      hash: md5
+      md5: 4bf950b3ef1abfc9a76004fc365b0626
+      size: 2712
+    outs:
+    - path: ./data/04_models/yolov8/baseline_full_dataset
+      hash: md5
+      md5: bed2de71fea05f5d4ca68f0fa70e4671.dir
+      size: 18743722
+      nfiles: 25
+  train_yolov8_best:
+    cmd:
+    - python ./scripts/model/yolov8/train.py --data ./data/03_model_input/yolov8/full/datasets/data.yaml
+      --config ./scripts/model/yolov8/configs/best.yaml --experiment-name best --loglevel
+      info
+    deps:
+    - path: ./data/03_model_input/yolov8
+      hash: md5
+      md5: 108cf58a8792ae87f00702d91f6ac499.dir
+      size: 2672166987
+      nfiles: 16787
+    - path: ./scripts/model/yolov8/configs/baseline.yaml
+      hash: md5
+      md5: 8c4aa7ead4bdb4867706874182fcffad
+      size: 45
+    - path: ./scripts/model/yolov8/train.py
+      hash: md5
+      md5: 4bf950b3ef1abfc9a76004fc365b0626
+      size: 2712
+    outs:
+    - path: ./data/04_models/yolov8/best
+      hash: md5
+      md5: d62ed56129b5cdaf93eb0613c9f28508.dir
+      size: 51634360
+      nfiles: 25

@@ -23,6 +23,7 @@ black = "^24.4.0"
 isort = "^5.13.2"
 mypy = "^1.9.0"
 flake8 = "^7.0.0"
+dvc-s3 = "^3.2.0"
 
 [build-system]
 requires = ["poetry-core"]
