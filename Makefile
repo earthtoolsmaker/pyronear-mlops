@@ -23,7 +23,7 @@ run_yolov8_hyperparameter_search:
 	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
 	  --output-dir ./data/04_models/yolov8/ \
 	  --experiment-name "random_hyperparameter_search" \
-	  --n 10 \
+	  --n 100 \
 	  --loglevel "info"
 
 run_yolov9_hyperparameter_search:
@@ -31,7 +31,15 @@ run_yolov9_hyperparameter_search:
 	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
 	  --output-dir ./data/04_models/yolov9/ \
 	  --experiment-name "random_hyperparameter_search" \
-	  --n 10 \
+	  --n 100 \
+	  --loglevel "info"
+
+run_yolov10_hyperparameter_search:
+	python ./scripts/model/yolov10/hyperparameter_search.py \
+	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
+	  --output-dir ./data/04_models/yolov10/ \
+	  --experiment-name "random_hyperparameter_search" \
+	  --n 100 \
 	  --loglevel "info"
 
 yolov8_benchmark:
@@ -44,4 +52,10 @@ yolov9_benchmark:
 	python ./scripts/model/yolov8/benchmark.py \
 	  --input-dir ./data/04_models/yolov9/ \
 	  --output-dir ./data/06_reporting/yolov9/ \
+	  --loglevel "info"
+
+yolov10_benchmark:
+	python ./scripts/model/yolov8/benchmark.py \
+	  --input-dir ./data/04_models/yolov10/ \
+	  --output-dir ./data/06_reporting/yolov10/ \
 	  --loglevel "info"

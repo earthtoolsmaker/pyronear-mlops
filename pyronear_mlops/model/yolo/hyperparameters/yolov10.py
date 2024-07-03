@@ -3,8 +3,9 @@ import random
 import numpy as np
 
 # Config documentation: https://docs.ultralytics.com/usage/cfg/#train-settings
+
 space = {
-    "model_type": np.array(["yolov9t.pt", "yolov9s.pt", "yolov9m.pt"]),
+    "model_type": np.array(["yolov10n", "yolov10s", "yolov10m"]),
     "epochs": np.linspace(50, 200, 20, dtype=int),
     "patience": np.linspace(10, 50, 10, dtype=int),
     "imgsz": np.array([320, 640, 1024], dtype=int),

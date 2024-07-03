@@ -206,7 +206,7 @@ Use the following commands to run random hyperparameter search:
 make run_yolov8_hyperparameter_search
 ```
 
-It will run 10 random training runs with hyperparameters drawn from the
+It will run 100 random training runs with hyperparameters drawn from the
 hyperparameter space defined in
 `pyronear_mlops/model/yolo/hyperparameters/yolov8.py`
 
@@ -218,9 +218,21 @@ Use the following commands to run random hyperparameter search:
 make run_yolov9_hyperparameter_search
 ```
 
-It will run 10 random training runs with hyperparameters drawn from the
+It will run 100 random training runs with hyperparameters drawn from the
 hyperparameter space defined in
 `pyronear_mlops/model/yolo/hyperparameters/yolov9.py`
+
+#### YOLOv10
+
+Use the following commands to run random hyperparameter search:
+
+```sh
+make run_yolov10_hyperparameter_search
+```
+
+It will run 100 random training runs with hyperparameters drawn from the
+hyperparameter space defined in
+`pyronear_mlops/model/yolo/hyperparameters/yolov10.py`
 
 ### Generate a benchmark CSV file
 
@@ -234,4 +246,10 @@ make yolov8_benchmark
 
 ```sh
 make yolov9_benchmark
+```
+
+#### YOLOv10
+
+```sh
+make yolov10_benchmark
 ```
