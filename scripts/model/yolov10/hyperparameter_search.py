@@ -81,11 +81,12 @@ if __name__ == "__main__":
 
         # Update ultralytics settings to log with MLFlow
         settings.update({"mlflow": True})
+        logging.info(f"Generated {len(configurations)} configurations")
 
-        for configuration in configurations:
+        for idx, configuration in enumerate(configurations):
             run_id = uuid.uuid4().hex
             logging.info(
-                f"Starting train run with the following configuration: {configuration}"
+                f"Starting train run {idx} with the following configuration: {configuration}"
             )
             logging.info(f"loading pretrained model: {configuration['model_type']}")
             model = load_pretrained_model(configuration["model_type"])
