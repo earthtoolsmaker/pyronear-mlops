@@ -2,7 +2,7 @@
 
 Machine Learning Pipeline for Wildfire Detection.
 
-[<img src="./docs/ml_space.png" />](https://www.earthtoolsmaker.org/spaces/early_forest_fire_detection/)
+[<img src="./docs/assets/images/ml_space.png" />](https://www.earthtoolsmaker.org/spaces/early_forest_fire_detection/)
 
 ![Pipeline Overview](./docs/assets/images/pipeline.png)
 Overview of the pipeline
