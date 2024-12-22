@@ -1,10 +1,11 @@
 # Pyronear: Machine Learning Pipeline for Wildfire Detection 🔥
 
-![Pyronear Logo](./docs/assets/images/pyronear_logo.png)
-
 Machine Learning Pipeline for Wildfire Detection.
 
+[<img src="./docs/ml_space.png" />](https://www.earthtoolsmaker.org/spaces/early_forest_fire_detection/)
+
 ![Pipeline Overview](./docs/assets/images/pipeline.png)
+Overview of the pipeline
 
 ## Setup
 
@@ -253,3 +254,5 @@ make yolov9_benchmark
 ```sh
 make yolov10_benchmark
 ```
+
+![Pyronear Logo](./docs/assets/images/pyronear_logo.png)
