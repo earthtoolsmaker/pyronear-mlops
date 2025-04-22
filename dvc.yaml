@@ -19,6 +19,34 @@ stages:
       - ./data/01_raw/DS-71c1fd51-v2
     outs:
       - ./data/03_model_input/yolov8
+  build_model_input_wildfire:
+    cmd:
+      - >-
+        python ./scripts/data/model_input/build.py
+        --input-dir ./data/01_raw/wildfire
+        --output-dir ./data/03_model_input/wildfire/
+        --random-seed 0
+        --sampling-ratio 0.05
+        --loglevel info
+    deps:
+      - ./scripts/data/model_input/build.py
+      - ./data/01_raw/wildfire
+    outs:
+      - ./data/03_model_input/wildfire/
+  train_yolov8_baseline_small_dataset_wildfire:
+    cmd:
+      - >-
+        python ./scripts/model/yolov8/train.py
+        --data ./data/03_model_input/wildfire/small/datasets/data.yaml
+        --config ./scripts/model/yolov8/configs/baseline.yaml
+        --experiment-name baseline_small_dataset_wildfire
+        --loglevel info
+    deps:
+      - ./scripts/model/yolov8/train.py
+      - ./scripts/model/yolov8/configs/baseline.yaml
+      - ./data/03_model_input/wildfire/small/
+    outs:
+      - ./data/04_models/yolov8/baseline_small_dataset_wildfire/
   train_yolov8_baseline_small_dataset:
     cmd:
       - >-
@@ -47,6 +75,20 @@ stages:
       - ./data/03_model_input/yolov8
     outs:
       - ./data/04_models/yolov8/baseline_full_dataset
+  train_yolov8_baseline_full_dataset_wildfire:
+    cmd:
+      - >-
+        python ./scripts/model/yolov8/train.py
+        --data ./data/03_model_input/wildfire/full/datasets/data.yaml
+        --config ./scripts/model/yolov8/configs/baseline.yaml
+        --experiment-name baseline_full_dataset_wildfire
+        --loglevel info
+    deps:
+      - ./scripts/model/yolov8/train.py
+      - ./scripts/model/yolov8/configs/baseline.yaml
+      - ./data/03_model_input/wildfire/full/datasets/
+    outs:
+      - ./data/04_models/yolov8/baseline_full_dataset_wildfire
   train_yolov8_best:
     cmd:
       - >-

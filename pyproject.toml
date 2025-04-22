@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-ultralytics = "8.2.48"
+ultralytics = "8.3.113"
 torch = "^2.2.2"
 torchvision = "^0.17.2"
 pandas = "^2.2.2"
