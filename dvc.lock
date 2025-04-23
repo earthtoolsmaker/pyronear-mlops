@@ -15,25 +15,25 @@ stages:
       nfiles: 15985
   build_model_input:
     cmd:
-    - python ./scripts/data/model_input/build.py --input-dir ./data/01_raw/DS-71c1fd51-v2
-      --output-dir ./data/03_model_input/yolov8 --random-seed 0 --sampling-ratio 0.05
-      --loglevel info
+    - python ./scripts/data/model_input/build.py --input-dir ./data/01_raw/wildfire
+      --output-dir ./data/03_model_input/wildfire/ --random-seed 0 --sampling-ratio
+      0.05 --loglevel info
     deps:
-    - path: ./data/01_raw/DS-71c1fd51-v2
+    - path: ./data/01_raw/wildfire
       hash: md5
-      md5: f3c759e0870c1fc460ed7474ef672ff7.dir
-      size: 2546845146
-      nfiles: 15985
+      md5: fe129f2ec6008feb67bc91e9428f94ba.dir
+      size: 5811038183
+      nfiles: 104275
     - path: ./scripts/data/model_input/build.py
       hash: md5
-      md5: ec2df4b4e3d1462eef5c8e893b195553
-      size: 6527
+      md5: 4c80f047d833abdf5b5bc08f9f885f04
+      size: 6554
     outs:
-    - path: ./data/03_model_input/yolov8
+    - path: ./data/03_model_input/wildfire/
       hash: md5
-      md5: 108cf58a8792ae87f00702d91f6ac499.dir
-      size: 2672166987
-      nfiles: 16787
+      md5: 02c0d3d7823f4f42ad045258026c6934.dir
+      size: 6099855615
+      nfiles: 109486
   train_baseline_small_dataset:
     cmd:
     - python ./scripts/model/yolov8/train.py --data ./data/03_model_input/yolov8/small/datasets/data.yaml

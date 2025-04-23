@@ -1,4 +1,6 @@
-"""Script to generate model input for YOLOv8 custom dataset training."""
+"""
+CLI script to generate model input for YOLO custom dataset training.
+"""
 
 import argparse
 import logging
@@ -11,18 +13,20 @@ from pyronear_mlops.data.utils import yaml_write
 
 
 def make_cli_parser() -> argparse.ArgumentParser:
-    """Makes the CLI parser."""
+    """
+    Make the CLI parser.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input-dir",
         help="path pointing to the raw dataset",
-        default="./data/01_raw/DS-71c1fd51-v2",
+        default="./data/01_raw/wildfire",
         type=Path,
     )
     parser.add_argument(
         "--output-dir",
         help="path to save the model_input",
-        default="./data/03_model_input/yolov8/",
+        default="./data/03_model_input/wildfire",
         type=Path,
     )
     parser.add_argument(
@@ -90,8 +94,10 @@ def make_yolov8_folder_structure(dir: Path) -> None:
 
 
 def copy_data(input_dir: Path, output_dir: Path) -> None:
-    """Copy over all data from `input_dir` to `output_dir` using the YOLOv8
-    folder structure conventions."""
+    """
+    Copy over all data from `input_dir` to `output_dir` using the YOLOv8
+    folder structure conventions.
+    """
     for split in ["train", "val"]:
         shutil.copytree(
             src=input_dir / "images" / split,
@@ -111,7 +117,8 @@ def sample_dataset(
     sampling_ratio: float = 0.1,
     random_seed: int = 0,
 ) -> list[dict]:
-    """Returns a downsampled list of images and labels for the given
+    """
+    Return a downsampled list of images and labels for the given
     `sampling_ratio` and `random_seed`.
 
     Each element in the returned list has the following keys:
@@ -151,7 +158,8 @@ def sample_dataset(
 
 
 def run_file_copy(copy_data: list[dict]) -> None:
-    """Runs the file copy instructions for each element of copy_data.
+    """
+    Run the file copy instructions for each element of copy_data.
 
     Each element should contain a from and to key. If not present, a
     warning is printed and the element is skipped.
