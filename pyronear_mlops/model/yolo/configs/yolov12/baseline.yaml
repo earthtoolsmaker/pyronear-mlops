@@ -1,4 +1,0 @@
----
-epochs: 50
-imgsz: 640
-model_type: yolo12n.pt
