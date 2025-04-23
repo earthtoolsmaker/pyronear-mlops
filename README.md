@@ -9,25 +9,27 @@ Overview of the pipeline
 
 ## Setup
 
-### Dependencies
+### 🐍 Python dependencies
 
-- [Poetry](https://python-poetry.org/): Python packaging and dependency
-management - Install it with something like `pipx`
-- [Git LFS](https://git-lfs.com/): Git Large File Storage replaces large
-files such as jupyter notebooks with text pointers inside Git while
-storing the file contents on a remote server like github.com
-- [DVC](https://dvc.org/): Data Version Control  - This will get
-installed automatically
-- [MLFlow](https://mlflow.org/): ML Experiment Tracking - This will get
-installed automatically
+Install `uv` with `pipx`:
 
-### Install
+```sh
+pipx install uv
+```
 
-#### Poetry
+Create a virtualenv and install the dependencies with `uv`:
 
-Follow the [official documentation](https://python-poetry.org/docs/) to install `poetry`.
+```sh
+uv sync
+```
 
-#### Git LFS
+Activate the `uv` virutalenv:
+
+```sh
+source .venv/bin/activate
+```
+
+### Git LFS
 
 Make sure [`git-lfs`](https://git-lfs.com/) is installed on your system.
 
@@ -39,46 +41,26 @@ git lfs install
 
 If not installed, one can install it with the following:
 
-##### Linux
+#### Linux
 
 ```sh
 sudo apt install git-lfs
 git-lfs install
 ```
 
-##### Mac
+#### Mac
 
 ```sh
 brew install git-lfs
 git-lfs install
 ```
 
-##### Windows
+#### Windows
 
 Download and run the latest [windows installer](https://github.com/git-lfs/git-lfs/releases).
 
-#### Project Dependencies
 
-Create a virtualenv and install python version with conda - or use a
-combination of pyenv and venv:
-
-```sh
-conda create -n pyronear-mlops python=3.12
-```
-
-Activate the virtual environment:
-
-```sh
-conda activate pyronear-mlops
-```
-
-Install python dependencies
-
-```sh
-poetry install
-```
-
-#### Data Dependencies
+### Data Dependencies
 
 To get the data dependencies one can use DVC - To fully use this
 repository you would need access to our DVC remote storage which is
@@ -185,6 +167,14 @@ make mlflow_stop
 To browse the different runs, open your browser and navigate to the URL:
 [http://localhost:5000](http://localhost:5000)
 
+## Test Suite
+
+Run the test suite with the following commmand:
+
+```sh
+make run_test_suite
+```
+
 ## Contribute to the project
 
 ### New ML experiments
@@ -199,60 +189,17 @@ Follow the steps:
 
 ### Run Random Hyperparameter Search
 
-#### YOLOv8
-
 Use the following commands to run random hyperparameter search:
 
 ```sh
-make run_yolov8_hyperparameter_search
+make run_yolov_hyperparameter_search
 ```
 
-It will run 100 random training runs with hyperparameters drawn from the
-hyperparameter space defined in
-`pyronear_mlops/model/yolo/hyperparameters/yolov8.py`
-
-#### YOLOv9
-
-Use the following commands to run random hyperparameter search:
-
-```sh
-make run_yolov9_hyperparameter_search
-```
-
-It will run 100 random training runs with hyperparameters drawn from the
-hyperparameter space defined in
-`pyronear_mlops/model/yolo/hyperparameters/yolov9.py`
-
-#### YOLOv10
-
-Use the following commands to run random hyperparameter search:
-
-```sh
-make run_yolov10_hyperparameter_search
-```
-
-It will run 100 random training runs with hyperparameters drawn from the
-hyperparameter space defined in
-`pyronear_mlops/model/yolo/hyperparameters/yolov10.py`
+It will run `n` random training runs with hyperparameters drawn from the
+hyperparameter space defined in [this file](pyronear_mlops/model/yolo/hyperparameters/space.py).
 
 ### Generate a benchmark CSV file
 
-#### YOLOv8
-
 ```sh
-make yolov8_benchmark
+make yolov_benchmark
 ```
-
-#### YOLOv9
-
-```sh
-make yolov9_benchmark
-```
-
-#### YOLOv10
-
-```sh
-make yolov10_benchmark
-```
-
-![Pyronear Logo](./docs/assets/images/pyronear_logo.png)
