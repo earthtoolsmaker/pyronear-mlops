@@ -21,9 +21,7 @@ run_yolo_hyperparameter_search:
 	  --data ./data/03_model_input/wildfire/full/datasets/data.yaml \
 	  --output-dir ./data/04_models/yolov12/ \
 	  --experiment-name "random_hyperparameter_search" \
-	  --model-versions 12 11 \
-	  --model-sizes "n" "s" "m" \
-	  --batch-sizes 16 \
+	  --filepath-space-yaml ./scripts/model/yolo/spaces/default.yaml \
 	  --n 5 \
 	  --loglevel "info"
 

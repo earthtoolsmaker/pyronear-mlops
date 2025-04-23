@@ -4,16 +4,41 @@ Module to generate hyperparameter search spaces for training YOLO models.
 
 import random
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 
+from pyronear_mlops.data.utils import yaml_read
 from pyronear_mlops.model.yolo.utils import (
     YOLOModelSize,
     YOLOModelVersion,
     model_version_to_model_type,
 )
 
+ALLOWED_HYPERPARAMETER_SPACE_KEYS = [
+    "model_type",
+    "epochs",
+    "patience",
+    "batch",
+    "imgsz",
+    "optimizer",
+    "lr0",
+    "lrf",
+    "mixup",
+    "close_mosaic",
+    "degrees",
+    "translate",
+]
+
 ALLOWED_BATCHS_SIZES = [16, 32, 64, 128]
+
+
+class HyperparameterSpaceParsingException(Exception):
+    """
+    Simple Parsing Exception for HyperparameterSpace.
+    """
+
+    pass
 
 
 @dataclass
@@ -108,6 +133,74 @@ def make_space(
         "translate": np.linspace(0, 0.4, 10, dtype=float),
     }
     return HyperparameterSpace(space=space)
+
+
+def _parse_values(dict_values: dict) -> np.ndarray:
+    """
+    Parser for the values of each param.
+    """
+    try:
+        param_type = dict_values["type"]
+        if param_type == "array":
+            array_type = dict_values["array_type"]
+            array_values = dict_values["values"]
+            return np.array(array_values).astype(array_type)
+        elif param_type == "space":
+            space_type = dict_values["space_type"]
+            space_config_type = dict_values["space_config"]["type"]
+            if space_config_type == "linear":
+                return np.linspace(
+                    start=dict_values["space_config"]["start"],
+                    stop=dict_values["space_config"]["stop"],
+                    num=dict_values["space_config"]["num"],
+                ).astype(space_type)
+            elif space_config_type == "logarithmic":
+                if dict_values["space_config"]["base"] == 10:
+                    return np.logspace(
+                        start=np.log10(dict_values["space_config"]["start"]),
+                        stop=np.log10(dict_values["space_config"]["stop"]),
+                        base=dict_values["space_config"]["base"],
+                        num=dict_values["space_config"]["num"],
+                    ).astype(space_type)
+                else:
+                    raise HyperparameterSpaceParsingException(
+                        f"space parsing not implemented for base != 10 {dict_values}..."
+                    )
+            else:
+                raise HyperparameterSpaceParsingException(
+                    f"space config type parsing {space_config_type} not implemented..."
+                )
+        else:
+            raise HyperparameterSpaceParsingException(
+                f"param_type {param_type} not implemented..."
+            )
+    except Exception as e:
+        raise HyperparameterSpaceParsingException from e
+
+
+def parse_space_yaml(filepath_space: Path) -> HyperparameterSpace:
+    """
+    Parse a space_yaml file into a HyperparameterSpace object.
+
+    Arguments:
+        filepath_space (Path): path to the space.yaml config file
+    Returns:
+        hyperparameter_space (HyperparameterSpace)
+    Throws:
+        - HyperparameterSpaceParsingException: when parsing fails.
+        - AssertError: when some parsed keys are not supported
+
+    __Note__: Config documentation: https://docs.ultralytics.com/usage/cfg/#train-settings
+    """
+    try:
+        dict_content = yaml_read(filepath_space)
+        space = {k: _parse_values(v) for k, v in dict_content.items()}
+        assert set(space.keys()) <= set(
+            ALLOWED_HYPERPARAMETER_SPACE_KEYS
+        ), "Some keys are unsupported!"
+        return HyperparameterSpace(space=space)
+    except Exception as e:
+        raise HyperparameterSpaceParsingException from e
 
 
 def draw_configuration(

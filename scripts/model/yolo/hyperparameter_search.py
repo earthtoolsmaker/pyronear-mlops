@@ -44,42 +44,11 @@ def make_cli_parser() -> argparse.ArgumentParser:
         required=True,
     )
     parser.add_argument(
-        "--model-versions",
-        help="Possible versions of the YOLO model to use",
-        default=[YOLOModelVersion.version_12],
-        type=lambda x: YOLOModelVersion(int(x)),
+        "--filepath-space-yaml",
+        help="Filepath to the Hyperparamter Space Definition",
+        type=Path,
+        default=Path("./scripts/model/yolo/spaces/default.yaml"),
         required=True,
-        nargs="+",
-        choices=[
-            YOLOModelVersion.version_8,
-            YOLOModelVersion.version_9,
-            YOLOModelVersion.version_10,
-            YOLOModelVersion.version_11,
-            YOLOModelVersion.version_12,
-        ],
-    )
-    parser.add_argument(
-        "--model-sizes",
-        help="Possible sizes of the YOLO model to use",
-        default=[YOLOModelSize.nano],
-        type=lambda s: YOLOModelSize(s),
-        nargs="+",
-        required=True,
-        choices=[
-            YOLOModelSize.nano,
-            YOLOModelSize.small,
-            YOLOModelSize.medium,
-            YOLOModelSize.large,
-        ],
-    )
-    parser.add_argument(
-        "--batch-sizes",
-        help="Possible Sizes of the batches during training",
-        default=[16, 32],
-        type=int,
-        nargs="+",
-        required=True,
-        choices=hyperparameters.ALLOWED_BATCHS_SIZES,
     )
     parser.add_argument(
         "--n",
@@ -119,16 +88,12 @@ if __name__ == "__main__":
         logging.info(args)
         n = args["n"]
         random_seed = datetime.now().timestamp()
-        model_versions = args["model_versions"]
-        model_sizes = args["model_sizes"]
-        batch_sizes = args["batch_sizes"]
+        filepath_space_yaml = args["filepath_space_yaml"]
         logging.info(f"Initializing random seed: {random_seed}")
         random.seed(random_seed)
 
-        hyperparameter_space = hyperparameters.make_space(
-            model_versions=model_versions,
-            model_sizes=model_sizes,
-            batch_sizes=batch_sizes,
+        hyperparameter_space = hyperparameters.parse_space_yaml(
+            filepath_space=filepath_space_yaml
         )
 
         configurations = hyperparameters.draw_n_random_configurations(
