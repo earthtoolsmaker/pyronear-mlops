@@ -1,4 +1,6 @@
-"""Script to aggregate all the results from the YOLOv8 train runs."""
+"""
+CLI script to aggregate all the results from the YOLOv8 train runs.
+"""
 
 import argparse
 import logging
@@ -17,14 +19,14 @@ def make_cli_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input-dir",
-        help="root directory containing YOLOv8 train runs.",
-        default="./data/04_models/yolov8/",
+        help="root directory containing YOLO train runs.",
+        default="./data/04_models/yolo/",
         type=Path,
     )
     parser.add_argument(
         "--output-dir",
         help="path to save the benchmark.",
-        default="./data/06_reporting/yolov8/",
+        default="./data/06_reporting/yolo/",
         type=Path,
     )
     parser.add_argument(
@@ -48,8 +50,10 @@ def validate_parsed_args(args: dict) -> bool:
 
 
 def add_args_columns(df_results: pd.DataFrame, args: dict):
-    """Returns a dataframe that has the same columns as df_results and also the
-    keys of args with the same value for each row (args[key])."""
+    """
+    Return a dataframe that has the same columns as df_results and also the
+    keys of args with the same value for each row (args[key]).
+    """
     df = df_results.copy()
     for k in args.keys():
         df[k] = str(args[k])
@@ -57,8 +61,10 @@ def add_args_columns(df_results: pd.DataFrame, args: dict):
 
 
 def make_benchmark(input_dir: Path) -> pd.DataFrame:
-    """Returns the df_benchmark dataframe containing the concatenated results
-    of each train runs and their associated model parameters."""
+    """
+    Return the df_benchmark dataframe containing the concatenated results
+    of each train runs and their associated model parameters.
+    """
     train_dirs = [
         input_dir / f for f in os.listdir(input_dir) if (input_dir / f).is_dir()
     ]

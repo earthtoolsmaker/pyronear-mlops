@@ -1,5 +1,5 @@
 """
-Script to run random hyperparameter search for training a YOLOvX
+CLI script to run random hyperparameter search for training a YOLO
 model the object detection task of fire smokes.
 """
 
@@ -14,7 +14,7 @@ from ultralytics import settings
 
 import pyronear_mlops.model.yolo.hyperparameters.space as hyperparameters
 from pyronear_mlops.model.yolo.train import load_pretrained_model, train
-from pyronear_mlops.model.yolo.utils import YOLOModelVersion
+from pyronear_mlops.model.yolo.utils import YOLOModelSize, YOLOModelVersion
 
 
 def make_cli_parser() -> argparse.ArgumentParser:
@@ -44,11 +44,12 @@ def make_cli_parser() -> argparse.ArgumentParser:
         required=True,
     )
     parser.add_argument(
-        "--model-version",
-        help="Version of the yolo model to use",
-        default=YOLOModelVersion.version_12,
+        "--model-versions",
+        help="Possible versions of the YOLO model to use",
+        default=[YOLOModelVersion.version_12],
         type=lambda x: YOLOModelVersion(int(x)),
         required=True,
+        nargs="+",
         choices=[
             YOLOModelVersion.version_8,
             YOLOModelVersion.version_9,
@@ -56,6 +57,29 @@ def make_cli_parser() -> argparse.ArgumentParser:
             YOLOModelVersion.version_11,
             YOLOModelVersion.version_12,
         ],
+    )
+    parser.add_argument(
+        "--model-sizes",
+        help="Possible sizes of the YOLO model to use",
+        default=[YOLOModelSize.nano],
+        type=lambda s: YOLOModelSize(s),
+        nargs="+",
+        required=True,
+        choices=[
+            YOLOModelSize.nano,
+            YOLOModelSize.small,
+            YOLOModelSize.medium,
+            YOLOModelSize.large,
+        ],
+    )
+    parser.add_argument(
+        "--batch-sizes",
+        help="Possible Sizes of the batches during training",
+        default=[16, 32],
+        type=int,
+        nargs="+",
+        required=True,
+        choices=hyperparameters.ALLOWED_BATCHS_SIZES,
     )
     parser.add_argument(
         "--n",
@@ -95,11 +119,17 @@ if __name__ == "__main__":
         logging.info(args)
         n = args["n"]
         random_seed = datetime.now().timestamp()
-        model_version = args["model_version"]
+        model_versions = args["model_versions"]
+        model_sizes = args["model_sizes"]
+        batch_sizes = args["batch_sizes"]
         logging.info(f"Initializing random seed: {random_seed}")
         random.seed(random_seed)
 
-        hyperparameter_space = hyperparameters.make_space(model_version)
+        hyperparameter_space = hyperparameters.make_space(
+            model_versions=model_versions,
+            model_sizes=model_sizes,
+            batch_sizes=batch_sizes,
+        )
 
         configurations = hyperparameters.draw_n_random_configurations(
             hyperparameter_space=hyperparameter_space,
@@ -116,13 +146,13 @@ if __name__ == "__main__":
             logging.info(
                 f"Starting train run {idx} with the following configuration: {configuration}"
             )
-            logging.info(f"loading pretrained model: {configuration['model_type']}")
-            model = load_pretrained_model(configuration["model_type"])
-            train(
-                model=model,
-                data_yaml_path=args["data"],
-                params=configuration,
-                project=str(args["output_dir"]),
-                experiment_name=f"{args['experiment_name']}_{run_id}",
-            )
+        #     logging.info(f"loading pretrained model: {configuration['model_type']}")
+        #     model = load_pretrained_model(configuration["model_type"])
+        #     train(
+        #         model=model,
+        #         data_yaml_path=args["data"],
+        #         params=configuration,
+        #         project=str(args["output_dir"]),
+        #         experiment_name=f"{args['experiment_name']}_{run_id}",
+        #     )
         exit(0)

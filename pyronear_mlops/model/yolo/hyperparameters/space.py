@@ -13,6 +13,8 @@ from pyronear_mlops.model.yolo.utils import (
     model_version_to_model_type,
 )
 
+ALLOWED_BATCHS_SIZES = [16, 32, 64, 128]
+
 
 @dataclass
 class HyperparameterSpace:
@@ -24,38 +26,57 @@ class HyperparameterSpace:
 
 
 def make_model_types(
-    model_version: YOLOModelVersion,
+    model_versions: list[YOLOModelVersion],
     model_sizes: list[YOLOModelSize] = [
         YOLOModelSize.nano,
-        # YOLOModelSize.small,
-        # YOLOModelSize.medium,
-        # YOLOModelSize.large,
+        YOLOModelSize.small,
+        YOLOModelSize.medium,
+        YOLOModelSize.large,
     ],
 ) -> list[str]:
     """
-    Make possible model types based on model_version and model_sizes.
+    Make possible model types based on model_versions and model_sizes.
     """
     return [
         model_version_to_model_type(model_version, model_size)
         for model_size in model_sizes
+        for model_version in model_versions
     ]
 
 
-def make_space(model_version: YOLOModelVersion) -> HyperparameterSpace:
+def make_space(
+    model_versions: list[YOLOModelVersion],
+    model_sizes: list[YOLOModelSize],
+    batch_sizes: list[int],
+) -> HyperparameterSpace:
     """
     Make an HyperparameterSpace.
 
+    Arguments:
+        model_version (YOLOModelVersion): the YOLO model version to target.
+        model_sizes (list[YOLOModelSize]): the YOLO model sizes to target.
+
+    Returns:
+        hyperparameter_space (HyperparameterSpace).
+
+    Throws:
+        assertError: when the batch_sizes are not in ALLOWED_BATCHS_SIZES.
+
     __Note__: Config documentation: https://docs.ultralytics.com/usage/cfg/#train-settings
     """
-    model_types = np.array(make_model_types(model_version))
+    model_types = np.array(
+        make_model_types(
+            model_versions=model_versions,
+            model_sizes=model_sizes,
+        )
+    )
     space = {
         "model_type": model_types,
         # "epochs": np.linspace(50, 200, 20, dtype=int),
         "epochs": np.linspace(50, 70, 3, dtype=int),
         "patience": np.linspace(10, 50, 10, dtype=int),
         "imgsz": np.array([1024], dtype=int),
-        "batch": np.array([16], dtype=int),
-        # "batch": np.array([32], dtype=int),
+        "batch": np.array(batch_sizes, dtype=int),
         "optimizer": np.array(
             [
                 "SGD",
