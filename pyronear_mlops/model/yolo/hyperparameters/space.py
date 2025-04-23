@@ -7,11 +7,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from pyronear_mlops.model.yolo.utils import (
-    YOLOModelSize,
-    YOLOModelVersion,
-    model_version_to_model_type,
-)
+from pyronear_mlops.model.yolo.utils import (YOLOModelSize, YOLOModelVersion,
+                                             model_version_to_model_type)
 
 ALLOWED_BATCHS_SIZES = [16, 32, 64, 128]
 

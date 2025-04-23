@@ -1,4 +1,5 @@
 """Script to generate model input for YOLOv8 custom dataset training."""
+
 import argparse
 import logging
 import os
