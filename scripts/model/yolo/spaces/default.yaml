@@ -68,7 +68,7 @@ mixup:
     - 0.2
 close_mosaic:
   type: space
-  space_type: float
+  space_type: int
   space_config:
     type: linear
     start: 0.
