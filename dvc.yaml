@@ -38,7 +38,7 @@ stages:
         --data ./data/03_model_input/wildfire/full/datasets/data.yaml
         --config ./scripts/model/yolo/configs/baseline.yaml
         --output-dir ./data/04_models/yolo/
-        --experiment-name baseline_full_dataset_wildfire
+        --experiment-name baseline_full
         --loglevel info
     deps:
       - ./scripts/model/yolo/train.py
@@ -52,7 +52,7 @@ stages:
       - >-
         python ./scripts/model/yolo/train.py
         --data ./data/03_model_input/wildfire/full/datasets/data.yaml
-        --config ./scripts/model/yolo/configs/baseline.yaml
+        --config ./scripts/model/yolo/configs/best.yaml
         --output-dir ./data/04_models/yolo/
         --experiment-name best
         --loglevel info
