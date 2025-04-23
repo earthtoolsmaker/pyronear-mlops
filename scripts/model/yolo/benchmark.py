@@ -1,5 +1,5 @@
 """
-CLI script to aggregate all the results from the YOLOv8 train runs.
+CLI script to aggregate all the results from the YOLO train runs.
 """
 
 import argparse

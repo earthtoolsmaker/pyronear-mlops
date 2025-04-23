@@ -1,25 +1,6 @@
+---
 stages:
-  download_dataset_v2:
-    cmd: ./scripts/data/download.sh
-    deps:
-      - ./scripts/data/download.sh
-    outs:
-      - ./data/01_raw/DS-71c1fd51-v2
   build_model_input:
-    cmd:
-      - >-
-        python ./scripts/data/model_input/build.py
-        --input-dir ./data/01_raw/DS-71c1fd51-v2
-        --output-dir ./data/03_model_input/yolov8
-        --random-seed 0
-        --sampling-ratio 0.05
-        --loglevel info
-    deps:
-      - ./scripts/data/model_input/build.py
-      - ./data/01_raw/DS-71c1fd51-v2
-    outs:
-      - ./data/03_model_input/yolov8
-  build_model_input_wildfire:
     cmd:
       - >-
         python ./scripts/data/model_input/build.py
@@ -33,73 +14,51 @@ stages:
       - ./data/01_raw/wildfire
     outs:
       - ./data/03_model_input/wildfire/
-  train_yolov8_baseline_small_dataset_wildfire:
+
+  train_yolo_baseline_small:
     cmd:
       - >-
-        python ./scripts/model/yolov8/train.py
+        python ./scripts/model/yolo/train.py
         --data ./data/03_model_input/wildfire/small/datasets/data.yaml
-        --config ./scripts/model/yolov8/configs/baseline.yaml
-        --experiment-name baseline_small_dataset_wildfire
+        --config ./scripts/model/yolo/configs/baseline.yaml
+        --output-dir ./data/04_models/yolo/
+        --experiment-name baseline_small
         --loglevel info
     deps:
-      - ./scripts/model/yolov8/train.py
-      - ./scripts/model/yolov8/configs/baseline.yaml
+      - ./scripts/model/yolo/train.py
+      - ./scripts/model/yolo/configs/baseline.yaml
       - ./data/03_model_input/wildfire/small/
     outs:
-      - ./data/04_models/yolov8/baseline_small_dataset_wildfire/
-  train_yolov8_baseline_small_dataset:
+      - ./data/04_models/yolo/baseline_small/
+
+  train_yolo_baseline:
     cmd:
       - >-
-        python ./scripts/model/yolov8/train.py
-        --data ./data/03_model_input/yolov8/small/datasets/data.yaml
-        --config ./scripts/model/yolov8/configs/baseline.yaml
-        --experiment-name baseline_small_dataset
-        --loglevel info
-    deps:
-      - ./scripts/model/yolov8/train.py
-      - ./scripts/model/yolov8/configs/baseline.yaml
-      - ./data/03_model_input/yolov8
-    outs:
-      - ./data/04_models/yolov8/baseline_small_dataset/
-  train_yolov8_baseline_full_dataset:
-    cmd:
-      - >-
-        python ./scripts/model/yolov8/train.py
-        --data ./data/03_model_input/yolov8/full/datasets/data.yaml
-        --config ./scripts/model/yolov8/configs/baseline.yaml
-        --experiment-name baseline_full_dataset
-        --loglevel info
-    deps:
-      - ./scripts/model/yolov8/train.py
-      - ./scripts/model/yolov8/configs/baseline.yaml
-      - ./data/03_model_input/yolov8
-    outs:
-      - ./data/04_models/yolov8/baseline_full_dataset
-  train_yolov8_baseline_full_dataset_wildfire:
-    cmd:
-      - >-
-        python ./scripts/model/yolov8/train.py
+        python ./scripts/model/yolo/train.py
         --data ./data/03_model_input/wildfire/full/datasets/data.yaml
-        --config ./scripts/model/yolov8/configs/baseline.yaml
+        --config ./scripts/model/yolo/configs/baseline.yaml
+        --output-dir ./data/04_models/yolo/
         --experiment-name baseline_full_dataset_wildfire
         --loglevel info
     deps:
-      - ./scripts/model/yolov8/train.py
-      - ./scripts/model/yolov8/configs/baseline.yaml
+      - ./scripts/model/yolo/train.py
+      - ./scripts/model/yolo/configs/baseline.yaml
       - ./data/03_model_input/wildfire/full/datasets/
     outs:
-      - ./data/04_models/yolov8/baseline_full_dataset_wildfire
-  train_yolov8_best:
+      - ./data/04_models/yolo/baseline_full
+
+  train_yolo_best:
     cmd:
       - >-
-        python ./scripts/model/yolov8/train.py
-        --data ./data/03_model_input/yolov8/full/datasets/data.yaml
-        --config ./scripts/model/yolov8/configs/best.yaml
+        python ./scripts/model/yolo/train.py
+        --data ./data/03_model_input/wildfire/full/datasets/data.yaml
+        --config ./scripts/model/yolo/configs/baseline.yaml
+        --output-dir ./data/04_models/yolo/
         --experiment-name best
         --loglevel info
     deps:
-      - ./scripts/model/yolov8/train.py
-      - ./scripts/model/yolov8/configs/baseline.yaml
-      - ./data/03_model_input/yolov8
+      - ./scripts/model/yolo/train.py
+      - ./scripts/model/yolo/configs/baseline.yaml
+      - ./data/03_model_input/wildfire/full/datasets/
     outs:
-      - ./data/04_models/yolov8/best
+      - ./data/04_models/yolo/best

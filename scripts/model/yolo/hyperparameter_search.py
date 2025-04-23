@@ -146,13 +146,13 @@ if __name__ == "__main__":
             logging.info(
                 f"Starting train run {idx} with the following configuration: {configuration}"
             )
-        #     logging.info(f"loading pretrained model: {configuration['model_type']}")
-        #     model = load_pretrained_model(configuration["model_type"])
-        #     train(
-        #         model=model,
-        #         data_yaml_path=args["data"],
-        #         params=configuration,
-        #         project=str(args["output_dir"]),
-        #         experiment_name=f"{args['experiment_name']}_{run_id}",
-        #     )
+            logging.info(f"loading pretrained model: {configuration['model_type']}")
+            model = load_pretrained_model(configuration["model_type"])
+            train(
+                model=model,
+                data_yaml_path=args["data"],
+                params=configuration,
+                project=str(args["output_dir"]),
+                experiment_name=f"{args['experiment_name']}_{run_id}",
+            )
         exit(0)
