@@ -1,5 +1,5 @@
 """
-Module to generate search spaces for training YOLO models.
+Module to generate hyperparameter search spaces for training YOLO models.
 """
 
 import random
@@ -27,8 +27,9 @@ def make_model_types(
     model_version: YOLOModelVersion,
     model_sizes: list[YOLOModelSize] = [
         YOLOModelSize.nano,
-        YOLOModelSize.small,
-        YOLOModelSize.medium,
+        # YOLOModelSize.small,
+        # YOLOModelSize.medium,
+        # YOLOModelSize.large,
     ],
 ) -> list[str]:
     """
@@ -49,10 +50,12 @@ def make_space(model_version: YOLOModelVersion) -> HyperparameterSpace:
     model_types = np.array(make_model_types(model_version))
     space = {
         "model_type": model_types,
-        "epochs": np.linspace(50, 200, 20, dtype=int),
+        # "epochs": np.linspace(50, 200, 20, dtype=int),
+        "epochs": np.linspace(50, 70, 3, dtype=int),
         "patience": np.linspace(10, 50, 10, dtype=int),
         "imgsz": np.array([1024], dtype=int),
-        "batch": np.array([32], dtype=int),
+        "batch": np.array([16], dtype=int),
+        # "batch": np.array([32], dtype=int),
         "optimizer": np.array(
             [
                 "SGD",

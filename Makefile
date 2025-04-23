@@ -76,3 +76,6 @@ yolo_benchmark:
 	  --input-dir ./data/04_models/yolov12/ \
 	  --output-dir ./data/06_reporting/yolov12/ \
 	  --loglevel "info"
+
+run_test_suite:
+	poetry run pytest
