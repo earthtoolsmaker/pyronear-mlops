@@ -188,7 +188,7 @@ Follow the steps:
 
 ### Run Random Hyperparameter Search
 
-Use the following commands to run random hyperparameter search:
+Use the following commands to run the default random hyperparameter search:
 
 ```sh
 make run_yolov_hyperparameter_search
@@ -196,6 +196,55 @@ make run_yolov_hyperparameter_search
 
 It will run `n` random training runs with hyperparameters drawn from the
 hyperparameter space defined in [this file](pyronear_mlops/model/yolo/hyperparameters/space.py).
+
+Adapt and run this command to run a specific hyperparamter search:
+
+```sh
+uv run python ./scripts/model/yolo/hyperparameter_search.py \
+   --data ./data/03_model_input/wildfire/full/datasets/data.yaml \
+   --output-dir ./data/04_models/yolov12/ \
+   --experiment-name "random_hyperparameter_search" \
+   --filepath-space-yaml ./scripts/model/yolo/spaces/default.yaml \
+   --n 5 \
+   --loglevel "info"
+```
+
+One can adapt the hyperparameter space to search by adding a new `space.yaml` file based on the [default.yaml](./scripts/model/yolo/spaces/default.yaml)
+
+```yaml
+model_type:
+  type: array
+  array_type: str
+  values:
+    - yolo11n.pt
+    - yolo11s.pt
+    - yolo12n.pt
+    - yolo12s.pt
+epochs:
+  type: space
+  space_type: int
+  space_config:
+    type: linear
+    start: 50
+    stop: 70
+    num: 10
+patience:
+  type: space
+  space_type: int
+  space_config:
+    type: linear
+    start: 10
+    stop: 50
+    num: 10
+batch:
+  type: array
+  array_type: int
+  values:
+    - 16
+    - 32
+    - 64
+...
+```
 
 ### Generate a benchmark CSV file
 
