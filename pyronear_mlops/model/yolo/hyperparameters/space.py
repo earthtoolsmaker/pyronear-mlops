@@ -34,7 +34,7 @@ ALLOWED_HYPERPARAMETER_SPACE_KEYS = [
     "translate",
 ]
 
-ALLOWED_BATCHS_SIZES = [16, 32, 64, 128]
+ALLOWED_BATCHS_SIZES = [-1, 16, 32, 64, 128]
 
 
 class HyperparameterSpaceParsingException(Exception):
