@@ -1,5 +1,7 @@
-"""Script to run random hyperparameter search for training a YOLOv8s model the
-object detection task of fire smokes."""
+"""
+CLI script to run random hyperparameter search for training a YOLO
+model the object detection task of fire smokes.
+"""
 
 import argparse
 import logging
@@ -10,36 +12,50 @@ from pathlib import Path
 
 from ultralytics import settings
 
-import pyronear_mlops.model.yolo.hyperparameters.yolov8 as hyperparameters
+import pyronear_mlops.model.yolo.hyperparameters.space as hyperparameters
 from pyronear_mlops.model.yolo.train import load_pretrained_model, train
+from pyronear_mlops.model.yolo.utils import YOLOModelSize, YOLOModelVersion
 
 
 def make_cli_parser() -> argparse.ArgumentParser:
-    """Makes the CLI parser."""
+    """
+    Make the CLI parser
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--data",
         help="filepath to the data_yaml config file for the dataset",
-        default="./data/03_model_input/yolov8/small/datasets/data.yaml",
+        default="./data/03_model_input/yolo/small/datasets/data.yaml",
         type=Path,
+        required=True,
     )
     parser.add_argument(
         "--output-dir",
         help="path to save the model_artifacts",
-        default="./data/04_models/yolov8/",
+        default="./data/04_models/yolo/",
         type=Path,
+        required=True,
     )
     parser.add_argument(
         "--experiment-name",
         help="experiment name",
         default="random_hyperparameter_search",
         type=str,
+        required=True,
+    )
+    parser.add_argument(
+        "--filepath-space-yaml",
+        help="Filepath to the Hyperparamter Space Definition",
+        type=Path,
+        default=Path("./scripts/model/yolo/spaces/default.yaml"),
+        required=True,
     )
     parser.add_argument(
         "--n",
         help="number of random configurations to run",
         default=10,
         type=int,
+        required=True,
     )
     parser.add_argument(
         "-log",
@@ -51,7 +67,9 @@ def make_cli_parser() -> argparse.ArgumentParser:
 
 
 def validate_parsed_args(args: dict) -> bool:
-    """Returns whether the parsed args are valid."""
+    """
+    Return whether the parsed args are valid
+    """
     if not args["data"].exists():
         logging.error("Invalid --data filepath does not exist")
         return False
@@ -70,22 +88,28 @@ if __name__ == "__main__":
         logging.info(args)
         n = args["n"]
         random_seed = datetime.now().timestamp()
+        filepath_space_yaml = args["filepath_space_yaml"]
         logging.info(f"Initializing random seed: {random_seed}")
         random.seed(random_seed)
 
+        hyperparameter_space = hyperparameters.parse_space_yaml(
+            filepath_space=filepath_space_yaml
+        )
+
         configurations = hyperparameters.draw_n_random_configurations(
-            space=hyperparameters.space,
+            hyperparameter_space=hyperparameter_space,
             n=n,
             random_seed=random_seed,
         )
 
         # Update ultralytics settings to log with MLFlow
         settings.update({"mlflow": True})
+        logging.info(f"Generated {len(configurations)} configurations")
 
-        for configuration in configurations:
+        for idx, configuration in enumerate(configurations):
             run_id = uuid.uuid4().hex
             logging.info(
-                f"Starting train run with the following configuration: {configuration}"
+                f"Starting train run {idx} with the following configuration: {configuration}"
             )
             logging.info(f"loading pretrained model: {configuration['model_type']}")
             model = load_pretrained_model(configuration["model_type"])

@@ -1,61 +1,35 @@
-.PHONY: check fix mlflow_start mlflow_stop run_yolov8_hyperparameter_search
-	run_yolov9_hyperparameter_search yolov8_benchmark yolov9_benchmark
+.PHONY: check fix mlflow_start mlflow_stop run_yolov8_hyperparameter_search run_yolo_hyperparameter_search yolo_benchmark run_test_suite
 
 check:
-	isort --check .
-	flake8 .
-	mypy .
-	black --check .
+	uv run isort --check .
+	uv run flake8 .
+	uv run mypy .
+	uv run black --check .
 
 fix:
-	isort .
-	black .
+	uv run isort .
+	uv run black .
 
 mlflow_start:
-	mlflow server --backend-store-uri runs/mlflow
+	uv run mlflow server --backend-store-uri runs/mlflow
 
 mlflow_stop:
 	ps aux | grep 'mlflow' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
-
-run_yolov8_hyperparameter_search:
-	python ./scripts/model/yolov8/hyperparameter_search.py \
-	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
-	  --output-dir ./data/04_models/yolov8/ \
+run_yolo_hyperparameter_search:
+	uv run python ./scripts/model/yolo/hyperparameter_search.py \
+	  --data ./data/03_model_input/wildfire/full/datasets/data.yaml \
+	  --output-dir ./data/04_models/yolo/ \
 	  --experiment-name "random_hyperparameter_search" \
-	  --n 100 \
+	  --filepath-space-yaml ./scripts/model/yolo/spaces/default.yaml \
+	  --n 5 \
 	  --loglevel "info"
 
-run_yolov9_hyperparameter_search:
-	python ./scripts/model/yolov9/hyperparameter_search.py \
-	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
-	  --output-dir ./data/04_models/yolov9/ \
-	  --experiment-name "random_hyperparameter_search" \
-	  --n 100 \
+yolo_benchmark:
+	uv run python ./scripts/model/yolo/benchmark.py \
+	  --input-dir ./data/04_models/yolo/ \
+	  --output-dir ./data/06_reporting/yolo/ \
 	  --loglevel "info"
 
-run_yolov10_hyperparameter_search:
-	python ./scripts/model/yolov10/hyperparameter_search.py \
-	  --data ./data/03_model_input/yolov8/full/datasets/data.yaml \
-	  --output-dir ./data/04_models/yolov10/ \
-	  --experiment-name "random_hyperparameter_search" \
-	  --n 100 \
-	  --loglevel "info"
-
-yolov8_benchmark:
-	python ./scripts/model/yolov8/benchmark.py \
-	  --input-dir ./data/04_models/yolov8/ \
-	  --output-dir ./data/06_reporting/yolov8/ \
-	  --loglevel "info"
-
-yolov9_benchmark:
-	python ./scripts/model/yolov8/benchmark.py \
-	  --input-dir ./data/04_models/yolov9/ \
-	  --output-dir ./data/06_reporting/yolov9/ \
-	  --loglevel "info"
-
-yolov10_benchmark:
-	python ./scripts/model/yolov8/benchmark.py \
-	  --input-dir ./data/04_models/yolov10/ \
-	  --output-dir ./data/06_reporting/yolov10/ \
-	  --loglevel "info"
+run_test_suite:
+	uv run pytest

@@ -1,4 +1,6 @@
-"""Script to aggregate all the results from the YOLOv8 train runs."""
+"""
+CLI script to aggregate all the results from the YOLO train runs.
+"""
 
 import argparse
 import logging
@@ -11,18 +13,20 @@ from pyronear_mlops.data.utils import yaml_read
 
 
 def make_cli_parser() -> argparse.ArgumentParser:
-    """Makes the CLI parser."""
+    """
+    Make the CLI parser.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input-dir",
-        help="root directory containing YOLOv8 train runs.",
-        default="./data/04_models/yolov8/",
+        help="root directory containing YOLO train runs.",
+        default="./data/04_models/yolo/",
         type=Path,
     )
     parser.add_argument(
         "--output-dir",
         help="path to save the benchmark.",
-        default="./data/06_reporting/yolov8/",
+        default="./data/06_reporting/yolo/",
         type=Path,
     )
     parser.add_argument(
@@ -35,7 +39,9 @@ def make_cli_parser() -> argparse.ArgumentParser:
 
 
 def validate_parsed_args(args: dict) -> bool:
-    """Returns whether the parsed args are valid."""
+    """
+    Return whether the parsed args are valid.
+    """
     if not args["input_dir"].exists():
         logging.error("Invalid --input-dir directory does not exist")
         return False
@@ -43,44 +49,22 @@ def validate_parsed_args(args: dict) -> bool:
         return True
 
 
-# input_dir = Path("./data/04_models/yolov8/")
-# output_dir = Path("./data/06_reporting/yolov8/")
-
-# train_dirs = [input_dir / f for f in os.listdir(input_dir) if (input_dir / f).is_dir()]
-# train_dirs
-
-# train_dir = train_dirs[0]
-# train_dir
-
-# args_filepath = train_dir / "args.yaml"
-# results_filepath = train_dir / "results.csv"
-# results_filepath.exists()
-# args_filepath.exists()
-# args = yaml_read(args_filepath)
-# args
-# df_results = pd.read_csv(results_filepath)
-# df_results
-# args
-
-# list(args.keys())
-# for k in args.keys():
-#     df[k] = str(args[k])
-
-# df
-
-
 def add_args_columns(df_results: pd.DataFrame, args: dict):
-    """Returns a dataframe that has the same columns as df_results and also the
-    keys of args with the same value for each row (args[key])."""
+    """
+    Return a dataframe that has the same columns as df_results and also the
+    keys of args with the same value for each row (args[key]).
+    """
     df = df_results.copy()
-    for k in args.keys():
-        df[k] = str(args[k])
-    return df
+    args_str = {k: str(v) for k, v in args.items()}
+    df_args = pd.DataFrame([args_str] * len(df))
+    return pd.concat([df, df_args], axis=1)
 
 
 def make_benchmark(input_dir: Path) -> pd.DataFrame:
-    """Returns the df_benchmark dataframe containing the concatenated results
-    of each train runs and their associated model parameters."""
+    """
+    Return the df_benchmark dataframe containing the concatenated results
+    of each train runs and their associated model parameters.
+    """
     train_dirs = [
         input_dir / f for f in os.listdir(input_dir) if (input_dir / f).is_dir()
     ]

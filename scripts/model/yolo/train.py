@@ -1,5 +1,7 @@
-"""Script to train a YOLOv9 model input for the object detection task of fire
-smokes."""
+"""
+CLI script to train a YOLOv8 model input for the object detection task of fire
+smokes.
+"""
 
 import argparse
 import logging
@@ -13,18 +15,20 @@ from pyronear_mlops.model.yolo.train import load_pretrained_model, train
 
 
 def make_cli_parser() -> argparse.ArgumentParser:
-    """Makes the CLI parser."""
+    """
+    Make the CLI parser.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--data",
         help="filepath to the data_yaml config file for the dataset",
-        default="./data/03_model_input/yolov9/small/datasets/data.yaml",
+        default="./data/03_model_input/wildfire/small/datasets/data.yaml",
         type=Path,
     )
     parser.add_argument(
         "--output-dir",
         help="path to save the model_artifacts",
-        default="./data/04_models/yolov9/",
+        default="./data/04_models/yolo/",
         type=Path,
     )
     parser.add_argument(
@@ -49,7 +53,9 @@ def make_cli_parser() -> argparse.ArgumentParser:
 
 
 def validate_parsed_args(args: dict) -> bool:
-    """Returns whether the parsed args are valid."""
+    """
+    Return whether the parsed args are valid.
+    """
     if not args["data"].exists():
         logging.error("Invalid --data filepath does not exist")
         return False

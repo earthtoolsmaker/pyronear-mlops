@@ -5,29 +5,30 @@ Machine Learning Pipeline for Wildfire Detection.
 [<img src="./docs/assets/images/ml_space.png" />](https://www.earthtoolsmaker.org/spaces/early_forest_fire_detection/)
 
 ![Pipeline Overview](./docs/assets/images/pipeline.png)
-Overview of the pipeline
 
 ## Setup
 
-### Dependencies
+### 🐍 Python dependencies
 
-- [Poetry](https://python-poetry.org/): Python packaging and dependency
-management - Install it with something like `pipx`
-- [Git LFS](https://git-lfs.com/): Git Large File Storage replaces large
-files such as jupyter notebooks with text pointers inside Git while
-storing the file contents on a remote server like github.com
-- [DVC](https://dvc.org/): Data Version Control  - This will get
-installed automatically
-- [MLFlow](https://mlflow.org/): ML Experiment Tracking - This will get
-installed automatically
+Install `uv` with `pipx`:
 
-### Install
+```sh
+pipx install uv
+```
 
-#### Poetry
+Create a virtualenv and install the dependencies with `uv`:
 
-Follow the [official documentation](https://python-poetry.org/docs/) to install `poetry`.
+```sh
+uv sync
+```
 
-#### Git LFS
+Activate the `uv` virutalenv:
+
+```sh
+source .venv/bin/activate
+```
+
+### Git LFS
 
 Make sure [`git-lfs`](https://git-lfs.com/) is installed on your system.
 
@@ -39,46 +40,26 @@ git lfs install
 
 If not installed, one can install it with the following:
 
-##### Linux
+#### Linux
 
 ```sh
 sudo apt install git-lfs
 git-lfs install
 ```
 
-##### Mac
+#### Mac
 
 ```sh
 brew install git-lfs
 git-lfs install
 ```
 
-##### Windows
+#### Windows
 
 Download and run the latest [windows installer](https://github.com/git-lfs/git-lfs/releases).
 
-#### Project Dependencies
 
-Create a virtualenv and install python version with conda - or use a
-combination of pyenv and venv:
-
-```sh
-conda create -n pyronear-mlops python=3.12
-```
-
-Activate the virtual environment:
-
-```sh
-conda activate pyronear-mlops
-```
-
-Install python dependencies
-
-```sh
-poetry install
-```
-
-#### Data Dependencies
+### Data Dependencies
 
 To get the data dependencies one can use DVC - To fully use this
 repository you would need access to our DVC remote storage which is
@@ -185,6 +166,14 @@ make mlflow_stop
 To browse the different runs, open your browser and navigate to the URL:
 [http://localhost:5000](http://localhost:5000)
 
+## Test Suite
+
+Run the test suite with the following commmand:
+
+```sh
+make run_test_suite
+```
+
 ## Contribute to the project
 
 ### New ML experiments
@@ -199,60 +188,66 @@ Follow the steps:
 
 ### Run Random Hyperparameter Search
 
-#### YOLOv8
-
-Use the following commands to run random hyperparameter search:
+Use the following commands to run the default random hyperparameter search:
 
 ```sh
-make run_yolov8_hyperparameter_search
+make run_yolov_hyperparameter_search
 ```
 
-It will run 100 random training runs with hyperparameters drawn from the
-hyperparameter space defined in
-`pyronear_mlops/model/yolo/hyperparameters/yolov8.py`
+It will run `n` random training runs with hyperparameters drawn from the
+hyperparameter space defined in [this file](pyronear_mlops/model/yolo/hyperparameters/space.py).
 
-#### YOLOv9
-
-Use the following commands to run random hyperparameter search:
+Adapt and run this command to run a specific hyperparamter search:
 
 ```sh
-make run_yolov9_hyperparameter_search
+uv run python ./scripts/model/yolo/hyperparameter_search.py \
+   --data ./data/03_model_input/wildfire/full/datasets/data.yaml \
+   --output-dir ./data/04_models/yolov12/ \
+   --experiment-name "random_hyperparameter_search" \
+   --filepath-space-yaml ./scripts/model/yolo/spaces/default.yaml \
+   --n 5 \
+   --loglevel "info"
 ```
 
-It will run 100 random training runs with hyperparameters drawn from the
-hyperparameter space defined in
-`pyronear_mlops/model/yolo/hyperparameters/yolov9.py`
+One can adapt the hyperparameter space to search by adding a new `space.yaml` file based on the [default.yaml](./scripts/model/yolo/spaces/default.yaml)
 
-#### YOLOv10
-
-Use the following commands to run random hyperparameter search:
-
-```sh
-make run_yolov10_hyperparameter_search
+```yaml
+model_type:
+  type: array
+  array_type: str
+  values:
+    - yolo11n.pt
+    - yolo11s.pt
+    - yolo12n.pt
+    - yolo12s.pt
+epochs:
+  type: space
+  space_type: int
+  space_config:
+    type: linear
+    start: 50
+    stop: 70
+    num: 10
+patience:
+  type: space
+  space_type: int
+  space_config:
+    type: linear
+    start: 10
+    stop: 50
+    num: 10
+batch:
+  type: array
+  array_type: int
+  values:
+    - 16
+    - 32
+    - 64
+...
 ```
-
-It will run 100 random training runs with hyperparameters drawn from the
-hyperparameter space defined in
-`pyronear_mlops/model/yolo/hyperparameters/yolov10.py`
 
 ### Generate a benchmark CSV file
 
-#### YOLOv8
-
 ```sh
-make yolov8_benchmark
+make yolov_benchmark
 ```
-
-#### YOLOv9
-
-```sh
-make yolov9_benchmark
-```
-
-#### YOLOv10
-
-```sh
-make yolov10_benchmark
-```
-
-![Pyronear Logo](./docs/assets/images/pyronear_logo.png)

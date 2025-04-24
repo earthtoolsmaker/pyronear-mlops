@@ -1,5 +1,0 @@
-epochs: 200
-patience: 100
-batch: 16
-model_type: yolov9c.pt
-imgsz: 1024
