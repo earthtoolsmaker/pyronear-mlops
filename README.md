@@ -197,7 +197,7 @@ make run_yolov_hyperparameter_search
 It will run `n` random training runs with hyperparameters drawn from the
 hyperparameter space defined in [this file](./scripts/model/yolo/spaces/default.yaml).
 
-Adapt and run this command to run a specific hyperparamter search:
+Adapt and run this command to launch a specific hyperparamater space search:
 
 ```sh
 uv run python ./scripts/model/yolo/hyperparameter_search.py \
