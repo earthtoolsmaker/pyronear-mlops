@@ -202,7 +202,7 @@ Adapt and run this command to run a specific hyperparamter search:
 ```sh
 uv run python ./scripts/model/yolo/hyperparameter_search.py \
    --data ./data/03_model_input/wildfire/full/datasets/data.yaml \
-   --output-dir ./data/04_models/yolov12/ \
+   --output-dir ./data/04_models/yolo/ \
    --experiment-name "random_hyperparameter_search" \
    --filepath-space-yaml ./scripts/model/yolo/spaces/default.yaml \
    --n 5 \
