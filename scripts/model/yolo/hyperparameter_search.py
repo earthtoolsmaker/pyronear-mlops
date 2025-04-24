@@ -14,7 +14,6 @@ from ultralytics import settings
 
 import pyronear_mlops.model.yolo.hyperparameters.space as hyperparameters
 from pyronear_mlops.model.yolo.train import load_pretrained_model, train
-from pyronear_mlops.model.yolo.utils import YOLOModelSize, YOLOModelVersion
 
 
 def make_cli_parser() -> argparse.ArgumentParser:
