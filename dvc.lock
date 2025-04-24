@@ -255,3 +255,28 @@ stages:
       md5: 19f2ddc6579612103535fde4bf40a801.dir
       size: 42141765
       nfiles: 22
+  train_yolo_baseline:
+    cmd:
+    - python ./scripts/model/yolo/train.py --data ./data/03_model_input/wildfire/full/datasets/data.yaml
+      --config ./scripts/model/yolo/configs/baseline.yaml --output-dir ./data/04_models/yolo/
+      --experiment-name baseline_full --loglevel info
+    deps:
+    - path: ./data/03_model_input/wildfire/full/datasets/
+      hash: md5
+      md5: 7fde0cdf5cbd7fd20c26303bf4b9d503.dir
+      size: 5829916093
+      nfiles: 104277
+    - path: ./scripts/model/yolo/configs/baseline.yaml
+      hash: md5
+      md5: 510c71d102bc0c2633b983f7365c8c82
+      size: 49
+    - path: ./scripts/model/yolo/train.py
+      hash: md5
+      md5: d16f85b65035d4e47d3500270a9775f3
+      size: 2736
+    outs:
+    - path: ./data/04_models/yolo/baseline_full
+      hash: md5
+      md5: 341b10342b11b0d6b6e9b07e985323e5.dir
+      size: 15247108
+      nfiles: 22
