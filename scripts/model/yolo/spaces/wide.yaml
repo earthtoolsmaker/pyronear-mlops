@@ -31,6 +31,7 @@ imgsz:
   array_type: int
   values:
     - 1024
+    - 1280
 optimizer:
   type: array
   array_type: str
