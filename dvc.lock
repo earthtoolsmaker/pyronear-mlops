@@ -230,3 +230,28 @@ stages:
       md5: 382b75e8fb20047b7632a2bb1ce6a28e.dir
       size: 16666946
       nfiles: 25
+  train_yolo_best:
+    cmd:
+    - python ./scripts/model/yolo/train.py --data ./data/03_model_input/wildfire/full/datasets/data.yaml
+      --config ./scripts/model/yolo/configs/best.yaml --output-dir ./data/04_models/yolo/
+      --experiment-name best --loglevel info
+    deps:
+    - path: ./data/03_model_input/wildfire/full/datasets/
+      hash: md5
+      md5: 7fde0cdf5cbd7fd20c26303bf4b9d503.dir
+      size: 5829916093
+      nfiles: 104277
+    - path: ./scripts/model/yolo/configs/best.yaml
+      hash: md5
+      md5: e6b69472caa733f6678792083f8f57f7
+      size: 284
+    - path: ./scripts/model/yolo/train.py
+      hash: md5
+      md5: d16f85b65035d4e47d3500270a9775f3
+      size: 2736
+    outs:
+    - path: ./data/04_models/yolo/best
+      hash: md5
+      md5: 19f2ddc6579612103535fde4bf40a801.dir
+      size: 42141765
+      nfiles: 22
