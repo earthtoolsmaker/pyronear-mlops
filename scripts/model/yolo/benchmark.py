@@ -55,9 +55,9 @@ def add_args_columns(df_results: pd.DataFrame, args: dict):
     keys of args with the same value for each row (args[key]).
     """
     df = df_results.copy()
-    for k in args.keys():
-        df[k] = str(args[k])
-    return df
+    args_str = {k: str(v) for k, v in args.items()}
+    df_args = pd.DataFrame([args_str] * len(df))
+    return pd.concat([df, df_args], axis=1)
 
 
 def make_benchmark(input_dir: Path) -> pd.DataFrame:

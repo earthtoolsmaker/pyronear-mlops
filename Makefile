@@ -19,7 +19,7 @@ mlflow_stop:
 run_yolo_hyperparameter_search:
 	uv run python ./scripts/model/yolo/hyperparameter_search.py \
 	  --data ./data/03_model_input/wildfire/full/datasets/data.yaml \
-	  --output-dir ./data/04_models/yolov12/ \
+	  --output-dir ./data/04_models/yolo/ \
 	  --experiment-name "random_hyperparameter_search" \
 	  --filepath-space-yaml ./scripts/model/yolo/spaces/default.yaml \
 	  --n 5 \
@@ -27,8 +27,8 @@ run_yolo_hyperparameter_search:
 
 yolo_benchmark:
 	uv run python ./scripts/model/yolo/benchmark.py \
-	  --input-dir ./data/04_models/yolov12/ \
-	  --output-dir ./data/06_reporting/yolov12/ \
+	  --input-dir ./data/04_models/yolo/ \
+	  --output-dir ./data/06_reporting/yolo/ \
 	  --loglevel "info"
 
 run_test_suite:
