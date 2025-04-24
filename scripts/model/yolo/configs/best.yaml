@@ -1,6 +1,7 @@
+# TODO: currently a very bad model
 ---
 model_type: yolo12s.pt
-epochs: 40
+epochs: 1
 patience: 15
 batch: 8
 imgsz: 1024

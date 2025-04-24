@@ -58,7 +58,7 @@ stages:
         --loglevel info
     deps:
       - ./scripts/model/yolo/train.py
-      - ./scripts/model/yolo/configs/baseline.yaml
+      - ./scripts/model/yolo/configs/best.yaml
       - ./data/03_model_input/wildfire/full/datasets/
     outs:
       - ./data/04_models/yolo/best
