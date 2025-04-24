@@ -10,16 +10,16 @@ epochs:
   space_config:
     type: linear
     start: 50
-    stop: 70
-    num: 10
+    stop: 100
+    num: 20
 patience:
   type: space
   space_type: int
   space_config:
     type: linear
     start: 10
-    stop: 50
-    num: 10
+    stop: 15
+    num: 5
 batch:
   type: array
   array_type: int
@@ -34,12 +34,6 @@ optimizer:
   type: array
   array_type: str
   values:
-    - SGD
-    - Adam
-    - AdamW
-    - NAdam
-    - RAdam
-    - RMSProp
     - auto
 lr0:
   type: space
@@ -47,8 +41,8 @@ lr0:
   space_config:
     type: logarithmic
     base: 10
-    start: 0.0001
-    stop: 0.03
+    start: 0.01
+    stop: 0.05
     num: 50
 lrf:
   type: space
@@ -59,27 +53,30 @@ lrf:
     start: 0.001
     stop: 0.01
     num: 50
+
 # Data Augmentation
 mixup:
   type: array
   array_type: float
   values:
-    - 0
+    - 0.1
     - 0.2
+    - 0.3
+    - 0.4
 close_mosaic:
   type: space
   space_type: int
   space_config:
     type: linear
-    start: 0.
-    stop: 35.
-    num: 10
+    start: 5
+    stop: 10
+    num: 5
 degrees:
   type: space
   space_type: float
   space_config:
     type: linear
-    start: 0.
+    start: 5.
     stop: 10.
     num: 10
 translate:
@@ -87,6 +84,6 @@ translate:
   space_type: float
   space_config:
     type: linear
-    start: 0
+    start: 0.1
     stop: 0.4
     num: 10

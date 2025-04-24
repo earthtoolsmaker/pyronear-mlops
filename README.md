@@ -188,14 +188,41 @@ Follow the steps:
 
 ### Run Random Hyperparameter Search
 
-Use the following commands to run the default random hyperparameter search:
+We use random hyperparameter search to find the best set of hyperparameters for
+our models.
+
+#### Wide & Fast
+
+The initial stage is to optimize for exploration of all hyperparameter ranges.
+A [wide.yaml](./scripts/model/yolo/spaces/wide.yaml) hyperparamter config file
+is available for performing this type of search.
+
+It is good practice to run this search on a small subset of the full dataset to
+make quickly iterate over many different combinations of hyperparameters.
+
+Run the wide and fast hyperparameter search with:
 
 ```sh
-make run_yolov_hyperparameter_search
+make run_yolo_wide_hyperparameter_search
 ```
 
-It will run `n` random training runs with hyperparameters drawn from the
-hyperparameter space defined in [this file](./scripts/model/yolo/spaces/default.yaml).
+#### Narrow & Deep
+
+
+The second stage of the hyperparameter search is to run some more narrow and local searches on identified combinations of good parameters from stage 1.
+A [narrow.yaml](./scripts/model/yolo/spaces/narrow.yaml) hyperparameter config
+file is available for this type of search.
+
+It is good practice to run this search on the full dataset to get the actual
+model performances of the randomly drawn sets of hyperparameters.
+
+Run the narrow and deep hyperparameter search with:
+
+```sh
+make run_yolo_wide_hyperparameter_search
+```
+
+#### Custom
 
 Adapt and run this command to launch a specific hyperparamater space search:
 
@@ -209,7 +236,8 @@ uv run python ./scripts/model/yolo/hyperparameter_search.py \
    --loglevel "info"
 ```
 
-One can adapt the hyperparameter space to search by adding a new `space.yaml` file based on the [default.yaml](./scripts/model/yolo/spaces/default.yaml)
+One can adapt the hyperparameter space to search by adding a new `space.yaml`
+file based on the [default.yaml](./scripts/model/yolo/spaces/default.yaml)
 
 ```yaml
 model_type:
@@ -249,5 +277,5 @@ batch:
 ### Generate a benchmark CSV file
 
 ```sh
-make yolov_benchmark
+make run_yolo_benchmark
 ```

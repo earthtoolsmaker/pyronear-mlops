@@ -1,4 +1,4 @@
-.PHONY: check fix mlflow_start mlflow_stop run_yolov8_hyperparameter_search run_yolo_hyperparameter_search yolo_benchmark run_test_suite
+.PHONY: check fix mlflow_start mlflow_stop run_yolo_wide_hyperparameter_search run_yolo_narrow_hyperparameter_search run_yolo_benchmark run_test_suite
 
 check:
 	uv run isort --check .
@@ -16,16 +16,25 @@ mlflow_start:
 mlflow_stop:
 	ps aux | grep 'mlflow' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
-run_yolo_hyperparameter_search:
+run_yolo_wide_hyperparameter_search:
+	uv run python ./scripts/model/yolo/hyperparameter_search.py \
+	  --data ./data/03_model_input/wildfire/small/datasets/data.yaml \
+	  --output-dir ./data/04_models/yolo/ \
+	  --experiment-name "random_hyperparameter_search" \
+	  --filepath-space-yaml ./scripts/model/yolo/spaces/wide.yaml \
+	  --n 50 \
+	  --loglevel "info"
+
+run_yolo_narrow_hyperparameter_search:
 	uv run python ./scripts/model/yolo/hyperparameter_search.py \
 	  --data ./data/03_model_input/wildfire/full/datasets/data.yaml \
 	  --output-dir ./data/04_models/yolo/ \
 	  --experiment-name "random_hyperparameter_search" \
-	  --filepath-space-yaml ./scripts/model/yolo/spaces/default.yaml \
+	  --filepath-space-yaml ./scripts/model/yolo/spaces/narrow.yaml \
 	  --n 5 \
 	  --loglevel "info"
 
-yolo_benchmark:
+run_yolo_benchmark:
 	uv run python ./scripts/model/yolo/benchmark.py \
 	  --input-dir ./data/04_models/yolo/ \
 	  --output-dir ./data/06_reporting/yolo/ \

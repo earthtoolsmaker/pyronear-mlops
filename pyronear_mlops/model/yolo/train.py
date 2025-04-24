@@ -26,36 +26,45 @@ def train(
     """
     assert data_yaml_path.exists(), f"data_yaml_path does not exist, {data_yaml_path}"
     default_params = {
+        # train parameters
         "batch": 16,
         "epochs": 100,
-        "patience": 100,
         "imgsz": 640,
         "lr0": 0.01,
         "lrf": 0.01,
         "optimizer": "auto",
-        # data augmentation
-        "mixup": 0.0,
+        "patience": 100,
+        # data augmentation parameters
         "close_mosaic": 10,
         "degrees": 0.0,
-        "translate": 0.1,
-        "flipud": 0.0,
         "fliplr": 0.5,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "mixup": 0.0,
+        "shear": 0.0,
+        "translate": 0.1,
     }
     params = {**default_params, **params}
     model.train(
         project=project,
         name=experiment_name,
         data=data_yaml_path.absolute(),
-        epochs=params["epochs"],
+        # train Parameters
         batch=params["batch"],
+        epochs=params["epochs"],
+        imgsz=params["imgsz"],
         lr0=params["lr0"],
         lrf=params["lrf"],
         optimizer=params["optimizer"],
-        imgsz=params["imgsz"],
-        close_mosaic=params["close_mosaic"],
         # Data Augmentation parameters
-        mixup=params["mixup"],
+        close_mosaic=params["close_mosaic"],
         degrees=params["degrees"],
-        flipud=params["flipud"],
+        fliplr=params["fliplr"],
+        hsv_h=params["hsv_h"],
+        hsv_s=params["hsv_s"],
+        hsv_v=params["hsv_v"],
+        mixup=params["mixup"],
+        shear=params["shear"],
         translate=params["translate"],
     )

@@ -16,17 +16,21 @@ from pyronear_mlops.model.yolo.utils import (
 )
 
 ALLOWED_HYPERPARAMETER_SPACE_KEYS = [
-    "model_type",
-    "epochs",
-    "patience",
     "batch",
+    "close_mosaic",
+    "degrees",
+    "epochs",
+    "hsv_h",
+    "hsv_s",
+    "hsv_v",
     "imgsz",
-    "optimizer",
     "lr0",
     "lrf",
     "mixup",
-    "close_mosaic",
-    "degrees",
+    "model_type",
+    "optimizer",
+    "patience",
+    "shear",
     "translate",
 ]
 

@@ -4,6 +4,7 @@ model_type:
   array_type: str
   values:
     - yolo12s.pt
+    - yolo11s.pt
 epochs:
   type: space
   space_type: int
@@ -61,18 +62,20 @@ lrf:
     num: 50
 # Data Augmentation
 mixup:
-  type: array
-  array_type: float
-  values:
-    - 0
-    - 0.2
+  type: space
+  space_type: float
+  space_config:
+    type: linear
+    start: 0.0
+    stop: 0.5
+    num: 20
 close_mosaic:
   type: space
   space_type: int
   space_config:
     type: linear
-    start: 0.
-    stop: 35.
+    start: 0
+    stop: 35
     num: 10
 degrees:
   type: space
@@ -82,6 +85,14 @@ degrees:
     start: 0.
     stop: 10.
     num: 10
+shear:
+  type: space
+  space_type: float
+  space_config:
+    type: linear
+    start: 0.
+    stop: 90.
+    num: 60
 translate:
   type: space
   space_type: float
@@ -90,3 +101,27 @@ translate:
     start: 0
     stop: 0.4
     num: 10
+hsv_h:
+  type: space
+  space_type: float
+  space_config:
+    type: linear
+    start: 0.0
+    stop: 0.3
+    num: 40
+hsv_s:
+  type: space
+  space_type: float
+  space_config:
+    type: linear
+    start: 0.4
+    stop: 0.9
+    num: 40
+hsv_v:
+  type: space
+  space_type: float
+  space_config:
+    type: linear
+    start: 0.1
+    stop: 0.8
+    num: 40
