@@ -209,7 +209,8 @@ make run_yolo_wide_hyperparameter_search
 #### Narrow & Deep
 
 
-The second stage of the hyperparameter search is to run some more narrow and local searches on identified combinations of good parameters from stage 1.
+The second stage of the hyperparameter search is to run some more narrow and
+local searches on identified combinations of good parameters from stage 1.
 A [narrow.yaml](./scripts/model/yolo/spaces/narrow.yaml) hyperparameter config
 file is available for this type of search.
 
