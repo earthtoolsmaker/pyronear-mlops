@@ -219,7 +219,7 @@ model performances of the randomly drawn sets of hyperparameters.
 Run the narrow and deep hyperparameter search with:
 
 ```sh
-make run_yolo_wide_hyperparameter_search
+make run_yolo_narrow_hyperparameter_search
 ```
 
 #### Custom
