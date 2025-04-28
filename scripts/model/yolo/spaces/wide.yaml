@@ -61,6 +61,25 @@ lrf:
     start: 0.001
     stop: 0.01
     num: 50
+box:
+  type: array
+  array_type: float
+  values:
+    - 0.5
+    - 3
+    - 7.5
+cls:
+  type: array
+  array_type: float
+  values:
+    - 0.5
+    - 2
+dfl:
+  type: array
+  array_type: float
+  values:
+    - 0.5
+    - 1.5
 # Data Augmentation
 mixup:
   type: space
