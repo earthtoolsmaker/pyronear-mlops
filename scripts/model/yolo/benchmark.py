@@ -101,5 +101,5 @@ if __name__ == "__main__":
         output_filepath = output_dir / "benchmark.csv"
         logging.info(f"Saving results in {output_filepath}")
         os.makedirs(output_dir, exist_ok=True)
-        df_benchmark.to_csv(output_dir / "benchmark.csv")
+        df_benchmark.to_csv(output_dir / "benchmark.csv", index=False)
         exit(0)
