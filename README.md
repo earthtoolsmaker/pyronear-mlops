@@ -1,6 +1,6 @@
 # Pyronear: Machine Learning Pipeline for Wildfire Detection 🔥
 
-Machine Learning Pipeline for Wildfire Detection.
+Machine Learning Training Pipeline for Wildfire Detection.
 
 [<img src="./docs/assets/images/ml_space.png" />](https://www.earthtoolsmaker.org/spaces/early_forest_fire_detection/)
 
@@ -66,7 +66,13 @@ repository you would need access to our DVC remote storage which is
 currently reserved for Pyronear members. On request, you will be provided with
 AWS credentials to access our remote storage.
 
-Once setup, run the following command:
+Pull the data files needed for training the model:
+
+```sh
+dvc get . ./data/03_model_input/
+```
+
+Pull all the data files tracked by DVC using this command:
 
 ```sh
 dvc pull
