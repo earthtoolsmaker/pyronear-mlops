@@ -34,6 +34,9 @@ def train(
         "lrf": 0.01,
         "optimizer": "auto",
         "patience": 100,
+        "box": 7.5,
+        "cls": 0.5,
+        "dfl": 1.5,
         # data augmentation parameters
         "close_mosaic": 10,
         "degrees": 0.0,
@@ -57,6 +60,9 @@ def train(
         lr0=params["lr0"],
         lrf=params["lrf"],
         optimizer=params["optimizer"],
+        box=params["box"],
+        cls=params["cls"],
+        dfl=params["dfl"],
         # Data Augmentation parameters
         close_mosaic=params["close_mosaic"],
         degrees=params["degrees"],
