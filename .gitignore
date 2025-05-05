@@ -5,4 +5,5 @@ yolo*.pt
 __pycache__
 runs
 data/04_models/yolo*/random_hyperparameter_search_*
+data/04_models/yolo*/wildfire_bench_*
 data/06_reporting/yolo*/
