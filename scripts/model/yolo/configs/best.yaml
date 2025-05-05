@@ -1,15 +1,14 @@
-# TODO: currently a very bad model
 ---
 model_type: yolo12s.pt
-epochs: 1
-patience: 15
-batch: 8
-imgsz: 1024
+epochs: 100
+patience: 50
+batch: 16
+imgsz: 1280
 lr0: 0.013281489698569585
 lrf: 0.0015264179671752333
 optimizer: auto
 mixup: 0.2
-close_mosaic: 5
+close_mosaic: 10
 degrees: 7.777777777777779
 translate: 0.08888888888888889
 flipud: 0.0
