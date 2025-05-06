@@ -28,15 +28,17 @@ def train(
     default_params = {
         # train parameters
         "batch": 16,
+        "box": 7.5,
+        "cls": 0.5,
+        "cos_lr": False,
+        "dfl": 1.5,
         "epochs": 100,
         "imgsz": 640,
         "lr0": 0.01,
         "lrf": 0.01,
         "optimizer": "auto",
         "patience": 100,
-        "box": 7.5,
-        "cls": 0.5,
-        "dfl": 1.5,
+        "single_cls": True,
         # val parameters
         "iou": 0.6,
         # data augmentation parameters
@@ -65,6 +67,8 @@ def train(
         box=params["box"],
         cls=params["cls"],
         dfl=params["dfl"],
+        single_cls=params["single_cls"],
+        cos_lr=params["cos_lr"],
         # val parameters
         iou=params["iou"],
         # Data Augmentation parameters
