@@ -9,9 +9,9 @@ epochs:
   space_type: int
   space_config:
     type: linear
-    start: 50
-    stop: 100
-    num: 20
+    start: 30
+    stop: 50
+    num: 10
 patience:
   type: space
   space_type: int
@@ -34,7 +34,8 @@ optimizer:
   type: array
   array_type: str
   values:
-    - auto
+    - Adam
+    - AdamW
 lr0:
   type: space
   space_type: float
@@ -53,6 +54,15 @@ lrf:
     start: 0.001
     stop: 0.01
     num: 50
+
+# Eval
+iou:
+  type: array
+  array_type: float
+  values:
+    - 0.15
+    - 0.2
+    - 0.25
 
 # Data Augmentation
 mixup:

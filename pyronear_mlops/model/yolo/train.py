@@ -37,6 +37,8 @@ def train(
         "box": 7.5,
         "cls": 0.5,
         "dfl": 1.5,
+        # val parameters
+        "iou": 0.6,
         # data augmentation parameters
         "close_mosaic": 10,
         "degrees": 0.0,
@@ -63,6 +65,8 @@ def train(
         box=params["box"],
         cls=params["cls"],
         dfl=params["dfl"],
+        # val parameters
+        iou=params["iou"],
         # Data Augmentation parameters
         close_mosaic=params["close_mosaic"],
         degrees=params["degrees"],

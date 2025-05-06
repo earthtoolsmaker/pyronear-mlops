@@ -80,6 +80,17 @@ dfl:
   values:
     - 0.5
     - 1.5
+
+# Eval
+iou:
+  type: array
+  array_type: float
+  values:
+    - 0.1
+    - 0.2
+    - 0.4
+    - 0.6
+
 # Data Augmentation
 mixup:
   type: space
@@ -126,8 +137,8 @@ hsv_h:
   space_type: float
   space_config:
     type: linear
-    start: 0.0
-    stop: 0.3
+    start: 0.01
+    stop: 0.05
     num: 40
 hsv_s:
   type: space
@@ -142,6 +153,6 @@ hsv_v:
   space_type: float
   space_config:
     type: linear
-    start: 0.1
-    stop: 0.8
+    start: 0.2
+    stop: 0.6
     num: 40

@@ -2,7 +2,7 @@
 model_type: yolo12s.pt
 epochs: 100
 patience: 50
-batch: 16
+batch: 4
 imgsz: 1280
 lr0: 0.013281489698569585
 lrf: 0.0015264179671752333
