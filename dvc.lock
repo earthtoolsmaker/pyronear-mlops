@@ -80,8 +80,8 @@ stages:
       nfiles: 104275
     - path: ./scripts/model/yolo/configs/best.yaml
       hash: md5
-      md5: e23e2eb4801173f34004183c0629c0e4
-      size: 252
+      md5: ed82cee3631381b907dbd29fcdcc8abe
+      size: 175
     - path: ./scripts/model/yolo/train.py
       hash: md5
       md5: d16f85b65035d4e47d3500270a9775f3
@@ -89,8 +89,8 @@ stages:
     outs:
     - path: ./data/04_models/yolo/best
       hash: md5
-      md5: 0d07ee801d4e1bfe3b49b9701df3fdc2.dir
-      size: 42978611
+      md5: 31feda347071e4b94a37552708af2465.dir
+      size: 43769447
       nfiles: 25
   train_yolo_baseline:
     cmd:
