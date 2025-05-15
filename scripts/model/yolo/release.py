@@ -121,7 +121,7 @@ def create_release(
     data = {
         "tag_name": version,
         "target_commitish": "main",
-        "name": f"Release {version} aka {release_name.title()}",
+        "name": f"{release_name.title()}",
         "body": body,
         "draft": False,
         "prerelease": False,
