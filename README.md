@@ -286,3 +286,26 @@ batch:
 ```sh
 make run_yolo_benchmark
 ```
+
+## 🌎 Release a new Model to the world
+
+The script to release a new version of the model is located in
+`./scripts/model/yolo/release.py`.
+Make sure to set your `GITHUB_ACCESS_TOKEN` as an env variable in your shell
+before running the following script:
+
+```sh
+export GITHUB_ACCESS_TOKEN=XXX
+uv run python ./scripts/model/yolo/release.py \
+  --version v1.0.42 \
+  --release-name "artistic alpaca" \
+  --github-owner earthtoolsmaker \
+  --github-repo pyronear-mlops
+```
+
+This will create a new release in the github repository with the model
+artifacts such as its weights.
+
+__Note__: The current naming convention for release is to use an adjective
+paired with an animal name starting with the same letter (eg. artistic alpaca,
+wise wolf, ...).
