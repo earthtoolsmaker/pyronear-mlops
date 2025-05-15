@@ -3,7 +3,7 @@ stages:
   build_model_input:
     cmd:
       - >-
-        python ./scripts/data/model_input/build.py
+        uv run python ./scripts/data/model_input/build.py
         --input-dir ./data/01_raw/wildfire
         --output-dir ./data/03_model_input/wildfire/
         --random-seed 0
@@ -18,7 +18,7 @@ stages:
   train_yolo_baseline_small:
     cmd:
       - >-
-        python ./scripts/model/yolo/train.py
+        uv run python ./scripts/model/yolo/train.py
         --data ./data/03_model_input/wildfire/small/datasets/data.yaml
         --config ./scripts/model/yolo/configs/baseline.yaml
         --output-dir ./data/04_models/yolo/
@@ -34,7 +34,7 @@ stages:
   train_yolo_baseline:
     cmd:
       - >-
-        python ./scripts/model/yolo/train.py
+        uv run python ./scripts/model/yolo/train.py
         --data ./data/03_model_input/wildfire/full/datasets/data.yaml
         --config ./scripts/model/yolo/configs/baseline.yaml
         --output-dir ./data/04_models/yolo/
@@ -50,7 +50,7 @@ stages:
   train_yolo_best:
     cmd:
       - >-
-        python ./scripts/model/yolo/train.py
+        uv run python ./scripts/model/yolo/train.py
         --data ./data/03_model_input/wildfire/full/datasets/data.yaml
         --config ./scripts/model/yolo/configs/best.yaml
         --output-dir ./data/04_models/yolo/
