@@ -172,18 +172,6 @@ if __name__ == "__main__":
         release_name = args["release_name"]
         GITHUB_ACCESS_TOKEN = os.getenv("GITHUB_ACCESS_TOKEN")
         assert GITHUB_ACCESS_TOKEN, "You must set the env variable GITHUB_ACCESS_TOKEN"
-
-        # Set the URL for the GitHub API request
-        url = "https://api.github.com/repos/earthtoolsmaker/pyronear-mlops/releases"
-
-        # Set the headers
-        headers = {
-            "Accept": "application/vnd.github+json",
-            "Authorization": f"Bearer {GITHUB_ACCESS_TOKEN}",
-            "X-GitHub-Api-Version": "2022-11-28",
-        }
-        response = requests.get(url, headers=headers)
-        print(response.json())
         response_release = create_release(
             owner=owner,
             repo=repo,
