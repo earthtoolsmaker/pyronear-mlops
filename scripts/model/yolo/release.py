@@ -167,8 +167,6 @@ if __name__ == "__main__":
         version = args["version"]
         owner = args["github_owner"]
         repo = args["github_repo"]
-        # owner = "earthtoolsmaker"
-        # repo = "pyronear-mlops"
         release_name = args["release_name"]
         GITHUB_ACCESS_TOKEN = os.getenv("GITHUB_ACCESS_TOKEN")
         assert GITHUB_ACCESS_TOKEN, "You must set the env variable GITHUB_ACCESS_TOKEN"
