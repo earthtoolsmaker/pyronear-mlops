@@ -62,3 +62,15 @@ stages:
       - ./data/03_model_input/wildfire/full/datasets/
     outs:
       - ./data/04_models/yolo/best
+
+  build_manifest_yolo_best:
+    cmd:
+      - >-
+        uv run python ./scripts/model/yolo/build_manifest.py
+        --save-dir ./data/06_reporting/yolo/best/
+        --dir-model ./data/04_models/yolo/best/
+        --loglevel info
+    deps:
+      - ./data/04_models/yolo/best/
+    outs:
+      - ./data/06_reporting/yolo/best/
