@@ -117,3 +117,19 @@ stages:
       md5: 2e5bf6f16c5d89a596153ed39c13cc40.dir
       size: 15247108
       nfiles: 22
+  build_manifest_yolo_best:
+    cmd:
+    - uv run python ./scripts/model/yolo/build_manifest.py --save-dir ./data/06_reporting/yolo/best/
+      --dir-model ./data/04_models/yolo/best/ --loglevel info
+    deps:
+    - path: ./data/04_models/yolo/best/
+      hash: md5
+      md5: 31feda347071e4b94a37552708af2465.dir
+      size: 43769447
+      nfiles: 25
+    outs:
+    - path: ./data/06_reporting/yolo/best/
+      hash: md5
+      md5: e5a52a94f68a925128a903ee406f94df.dir
+      size: 6738
+      nfiles: 1
