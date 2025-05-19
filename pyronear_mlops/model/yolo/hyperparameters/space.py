@@ -24,6 +24,7 @@ ALLOWED_HYPERPARAMETER_SPACE_KEYS = [
     "hsv_s",
     "hsv_v",
     "imgsz",
+    "iou",
     "lr0",
     "lrf",
     "box",
