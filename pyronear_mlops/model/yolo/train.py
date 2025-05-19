@@ -28,19 +28,19 @@ def train(
     default_params = {
         # train parameters
         "batch": 16,
-        "box": 7.5,
-        "cls": 0.5,
         "cos_lr": False,
-        "dfl": 1.5,
         "epochs": 100,
         "imgsz": 640,
         "lr0": 0.01,
         "lrf": 0.01,
         "optimizer": "auto",
         "patience": 100,
-        "single_cls": True,
-        # val parameters
+        # eval parameters
+        "box": 7.5,
+        "cls": 0.5,
+        "dfl": 1.5,
         "iou": 0.6,
+        "single_cls": True,
         # data augmentation parameters
         "close_mosaic": 10,
         "degrees": 0.0,
@@ -59,16 +59,17 @@ def train(
         data=data_yaml_path.absolute(),
         # train Parameters
         batch=params["batch"],
+        box=params["box"],
+        cls=params["cls"],
+        cos_lr=params["cos_lr"],
+        dfl=params["dfl"],
         epochs=params["epochs"],
         imgsz=params["imgsz"],
         lr0=params["lr0"],
         lrf=params["lrf"],
         optimizer=params["optimizer"],
-        box=params["box"],
-        cls=params["cls"],
-        dfl=params["dfl"],
+        patience=params["patience"],
         single_cls=params["single_cls"],
-        cos_lr=params["cos_lr"],
         # val parameters
         iou=params["iou"],
         # Data Augmentation parameters
