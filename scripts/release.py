@@ -5,6 +5,7 @@ CLI script to release the pyronear models.
 import argparse
 import logging
 import os
+import shutil
 from pathlib import Path
 
 import requests
@@ -169,6 +170,19 @@ def get_model_name(version: str, release_name: str, filepath_manifest: Path) -> 
     return f"{model_name}_{version}_{md5_data_short}"
 
 
+def create_archive(source_folder: Path, archive_name: str) -> Path:
+    """
+    Create an archive tar.gz file of the source_folder and using `archive_name`
+    to name it.
+    """
+    # Create a tar.gz archive of the source folder
+    archive_path = Path("/tmp") / archive_name
+    shutil.make_archive(
+        str(archive_path).replace(".tar.gz", ""), "gztar", source_folder
+    )
+    return archive_path
+
+
 if __name__ == "__main__":
     cli_parser = make_cli_parser()
     args = vars(cli_parser.parse_args())
@@ -208,6 +222,28 @@ if __name__ == "__main__":
             release_name=release_name,
             filepath_manifest=filepath_manifest,
         )
+        dir_exports = Path("./data/04_models/yolo-export/best/")
+        subdirs = [d for d in dir_exports.iterdir() if d.is_dir()]
+
+        for subdir in subdirs:
+            logger.info(f"Making an archive for the export in {subdir} format")
+            archive_name = f"{subdir.stem}_{model_name}.tar.gz"
+            filepath_archive = create_archive(
+                source_folder=subdir,
+                archive_name=archive_name,
+            )
+            logger.info(
+                f"Enclosing the archive {filepath_archive} to the release assets"
+            )
+            upload_asset(
+                owner=owner,
+                repo=repo,
+                release_id=release_id,
+                filepath_asset=filepath_archive,
+                name=archive_name,
+                github_access_token=GITHUB_ACCESS_TOKEN,
+            )
+
         response_upload_manifest_yaml = upload_asset(
             owner=owner,
             repo=repo,
