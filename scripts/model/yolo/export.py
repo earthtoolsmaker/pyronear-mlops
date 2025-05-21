@@ -90,13 +90,24 @@ if __name__ == "__main__":
         model.info()
         save_dir = output_dir / format / device
         save_dir.mkdir(parents=True, exist_ok=True)
-        filepath_export = Path(
-            model.export(
-                format=format,
-                imgsz=args_train["imgsz"],
-                device=device,
+        if format == "onnx":
+            filepath_export = Path(
+                model.export(
+                    format=format,
+                    dynamic=True,
+                    imgsz=args_train["imgsz"],
+                    device=device,
+                )
             )
-        )
+        else:
+            filepath_export = Path(
+                model.export(
+                    format=format,
+                    imgsz=args_train["imgsz"],
+                    device=device,
+                )
+            )
+
         filepath_torchscript = (
             filepath_weights.parent / f"{filepath_weights.stem}.torchscript"
         )
