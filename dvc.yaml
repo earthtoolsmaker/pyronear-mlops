@@ -77,23 +77,19 @@ stages:
       - ./data/06_reporting/yolo/best/
 
   export_yolo_best:
+    matrix:
+      format: [onnx, ncnn]
+      device: [cpu, mps]
     cmd:
       - >-
         uv run python ./scripts/model/yolo/export.py
         --output-dir ./data/04_models/yolo-export/best/
         --model-dir ./data/04_models/yolo/best/
-        --format onnx
-        --device cpu
-        --loglevel info
-      - >-
-        uv run python ./scripts/model/yolo/export.py
-        --output-dir ./data/04_models/yolo-export/best/
-        --model-dir ./data/04_models/yolo/best/
-        --format ncnn
-        --device cpu
+        --format ${item.format}
+        --device ${item.device}
         --loglevel info
     deps:
       - ./scripts/model/yolo/export.py
       - ./data/04_models/yolo/best/
     outs:
-      - ./data/04_models/yolo-export/best/
+      - ./data/04_models/yolo-export/best/${item.format}/${item.device}
