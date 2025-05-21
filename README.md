@@ -6,6 +6,27 @@ Machine Learning Training Pipeline for Wildfire Detection.
 
 ![Pipeline Overview](./docs/assets/images/pipeline.png)
 
+## Data Pipeline
+
+The whole repository is organized as a data pipeline that can be run to
+train the models and export them to the appropriate formats.
+
+The Data pipeline is organized with a [dvc.yaml](./dvc.yaml) file.
+
+### DVC Stages
+
+This section list and describes all the DVC stages that are defined in the
+[dvc.yaml](./dvc.yaml) file:
+
+- __build_model_input__: Generate model input for YOLO custom dataset training
+using the provided raw dataset.
+- __train_yolo_baseline_small__: Train a YOLO baseline model on a subset of the
+full dataset.
+- __train_yolo_baseline__: Train a YOLO baseline model on the full dataset.
+- __train_yolo_best__: Train the best YOLO model on the full dataset.
+- __build_manifest_yolo_best__: Build the manifest.yaml file to attach with the model.
+- __export_yolo_best__: Export the best YOLO model to different formats (ONNX, NCNN).
+
 ## Setup
 
 ### 🐍 Python dependencies

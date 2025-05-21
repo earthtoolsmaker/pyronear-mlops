@@ -1,6 +1,6 @@
 """
-CLI script to train a YOLOv8 model input for the object detection task of fire
-smokes.
+CLI script to train a YOLO model for the object detection task of
+fire smokes.
 """
 
 import argparse
