@@ -35,6 +35,7 @@ def train(
         "lrf": 0.01,
         "optimizer": "auto",
         "patience": 100,
+        "warmup_epochs": 3,
         # eval parameters
         "box": 7.5,
         "cls": 0.5,
@@ -66,6 +67,7 @@ def train(
         lrf=params["lrf"],
         optimizer=params["optimizer"],
         patience=params["patience"],
+        warmup_epochs=params["warmup_epochs"],
         # val parameters
         box=params["box"],
         cls=params["cls"],
