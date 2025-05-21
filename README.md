@@ -296,8 +296,8 @@ before running the following script:
 
 ```sh
 export GITHUB_ACCESS_TOKEN=XXX
-uv run python ./scripts/model/yolo/release.py \
-  --version v1.0.42 \
+uv run python ./scripts/release.py \
+  --version v1.1.0 \
   --release-name "artistic alpaca" \
   --github-owner earthtoolsmaker \
   --github-repo pyronear-mlops

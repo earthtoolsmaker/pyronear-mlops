@@ -9,6 +9,8 @@ from pathlib import Path
 
 import requests
 
+from pyronear_mlops.data.utils import yaml_read
+
 
 def make_cli_parser() -> argparse.ArgumentParser:
     """
@@ -155,6 +157,18 @@ def upload_asset(
         return response.json()
 
 
+def get_model_name(version: str, release_name: str, filepath_manifest: Path) -> str:
+    """
+    Return the model name which contains the release_name, the version and its
+    associated train data hash.
+    """
+    model_name = release_name.replace(" ", "-")
+    manifest = yaml_read(filepath_manifest)
+    md5_data = manifest["data"]["dvc"]["md5"]
+    md5_data_short = md5_data[:7]
+    return f"{model_name}_{version}_{md5_data_short}"
+
+
 if __name__ == "__main__":
     cli_parser = make_cli_parser()
     args = vars(cli_parser.parse_args())
@@ -180,20 +194,26 @@ if __name__ == "__main__":
         release_id = response_release["id"]
         logger.info(f"release created: {response_release}")
         logger.info(f"release_id: {release_id}")
+        filepath_manifest = Path("./data/06_reporting/yolo/best/manifest.yaml")
         response_upload_manifest_yaml = upload_asset(
             owner=owner,
             repo=repo,
             release_id=release_id,
-            filepath_asset=Path("./data/06_reporting/yolo/best/manifest.yaml"),
+            filepath_asset=filepath_manifest,
             name="manifest.yaml",
             github_access_token=GITHUB_ACCESS_TOKEN,
+        )
+        model_name = get_model_name(
+            version=version,
+            release_name=release_name,
+            filepath_manifest=filepath_manifest,
         )
         response_upload_manifest_yaml = upload_asset(
             owner=owner,
             repo=repo,
             release_id=release_id,
             filepath_asset=Path("./data/04_models/yolo/best/weights/best.pt"),
-            name="best.pt",
+            name=f"{model_name}.pt",
             github_access_token=GITHUB_ACCESS_TOKEN,
         )
         exit(0)
