@@ -71,6 +71,29 @@ stages:
         --dir-model ./data/04_models/yolo/best/
         --loglevel info
     deps:
+      - ./scripts/model/yolo/build_manifest.py
       - ./data/04_models/yolo/best/
     outs:
       - ./data/06_reporting/yolo/best/
+
+  export_best_model:
+    cmd:
+      - >-
+        uv run python ./scripts/model/yolo/export.py
+        --output-dir ./data/04_models/yolo-export/best/
+        --model-dir ./data/04_models/yolo/best/
+        --format onnx
+        --device cpu
+        --loglevel info
+      - >-
+        uv run python ./scripts/model/yolo/export.py
+        --output-dir ./data/04_models/yolo-export/best/
+        --model-dir ./data/04_models/yolo/best/
+        --format ncnn
+        --device cpu
+        --loglevel info
+    deps:
+      - ./scripts/model/yolo/export.py
+      - ./data/04_models/yolo/best/
+    outs:
+      - ./data/04_models/yolo-export/best/
