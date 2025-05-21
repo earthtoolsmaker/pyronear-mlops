@@ -133,7 +133,7 @@ stages:
       md5: e5a52a94f68a925128a903ee406f94df.dir
       size: 6738
       nfiles: 1
-  export_best_model:
+  export_yolo_best:
     cmd:
     - uv run python ./scripts/model/yolo/export.py --output-dir ./data/04_models/yolo-export/best/
       --model-dir ./data/04_models/yolo/best/ --format onnx --device cpu --loglevel
@@ -154,6 +154,6 @@ stages:
     outs:
     - path: ./data/04_models/yolo-export/best/
       hash: md5
-      md5: 8621ef208ac7f86080676f4888d2f88a.dir
+      md5: 519e7734b86a0aecd49d82d512ea7841.dir
       size: 114606288
       nfiles: 6

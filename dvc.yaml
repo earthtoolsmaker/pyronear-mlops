@@ -76,7 +76,7 @@ stages:
     outs:
       - ./data/06_reporting/yolo/best/
 
-  export_best_model:
+  export_yolo_best:
     cmd:
       - >-
         uv run python ./scripts/model/yolo/export.py
