@@ -9,7 +9,7 @@ epochs:
   space_type: int
   space_config:
     type: linear
-    start: 35
+    start: 40
     stop: 55
     num: 10
 patience:
@@ -18,7 +18,7 @@ patience:
   space_config:
     type: linear
     start: 10
-    stop: 20
+    stop: 25
     num: 10
 batch:
   type: array
@@ -34,7 +34,6 @@ optimizer:
   type: array
   array_type: str
   values:
-    - Adam
     - AdamW
 lr0:
   type: space
