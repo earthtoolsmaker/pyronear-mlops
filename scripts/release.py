@@ -165,9 +165,10 @@ def get_model_name(version: str, release_name: str, filepath_manifest: Path) -> 
     """
     model_name = release_name.replace(" ", "-")
     manifest = yaml_read(filepath_manifest)
+    model_type = manifest["model"]["model_type"].split(".")[0]
     md5_data = manifest["data"]["dvc"]["md5"]
     md5_data_short = md5_data[:7]
-    return f"{model_name}_{version}_{md5_data_short}"
+    return f"{model_type}_{model_name}_{version}_{md5_data_short}"
 
 
 def create_archive(source_folder: Path, archive_name: str) -> Path:
