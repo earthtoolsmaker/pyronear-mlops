@@ -225,24 +225,29 @@ if __name__ == "__main__":
         dir_exports = Path("./data/04_models/yolo-export/best/")
         subdirs = [d for d in dir_exports.iterdir() if d.is_dir()]
 
-        for subdir in subdirs:
-            logger.info(f"Making an archive for the export in {subdir} format")
-            archive_name = f"{subdir.stem}_{model_name}.tar.gz"
-            filepath_archive = create_archive(
-                source_folder=subdir,
-                archive_name=archive_name,
-            )
-            logger.info(
-                f"Enclosing the archive {filepath_archive} to the release assets"
-            )
-            upload_asset(
-                owner=owner,
-                repo=repo,
-                release_id=release_id,
-                filepath_asset=filepath_archive,
-                name=archive_name,
-                github_access_token=GITHUB_ACCESS_TOKEN,
-            )
+        for subdir_format in subdirs:
+            for subdir_device in [d for d in subdir_format.iterdir() if d.is_dir()]:
+                export_device = subdir_device.stem
+                export_format = subdir_format.stem
+                logger.info(
+                    f"Making an archive for the export in {export_format} format for the device {export_device}"
+                )
+                archive_name = f"{export_format}_{export_device}_{model_name}.tar.gz"
+                filepath_archive = create_archive(
+                    source_folder=subdir_device,
+                    archive_name=archive_name,
+                )
+                logger.info(
+                    f"Enclosing the archive {filepath_archive} to the release assets"
+                )
+                upload_asset(
+                    owner=owner,
+                    repo=repo,
+                    release_id=release_id,
+                    filepath_asset=filepath_archive,
+                    name=archive_name,
+                    github_access_token=GITHUB_ACCESS_TOKEN,
+                )
 
         response_upload_manifest_yaml = upload_asset(
             owner=owner,
