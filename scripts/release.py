@@ -248,6 +248,7 @@ if __name__ == "__main__":
                     name=archive_name,
                     github_access_token=GITHUB_ACCESS_TOKEN,
                 )
+                filepath_archive.unlink()
 
         response_upload_manifest_yaml = upload_asset(
             owner=owner,
