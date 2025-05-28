@@ -13,14 +13,14 @@ stages:
       nfiles: 104275
     - path: ./scripts/data/model_input/build.py
       hash: md5
-      md5: 4c80f047d833abdf5b5bc08f9f885f04
-      size: 6554
+      md5: ab650fe3c19655691c66eaf8273e0504
+      size: 6702
     outs:
     - path: ./data/03_model_input/wildfire/
       hash: md5
-      md5: 02c0d3d7823f4f42ad045258026c6934.dir
-      size: 6099855615
-      nfiles: 109486
+      md5: da08f5b845b5d205c11cde5b75115fe2.dir
+      size: 6704550320
+      nfiles: 120276
   build_model_input_wildfire:
     cmd:
     - python ./scripts/data/model_input/build.py --input-dir ./data/01_raw/wildfire
