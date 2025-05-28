@@ -134,10 +134,13 @@ def sample_dataset(
         images_filepaths = list(images_split_dir.glob("*.jpg"))
         n_images = len(images_filepaths)
         k = int(n_images * sampling_ratio)
-        downsampled_image_filepaths = random.Random(random_seed).sample(
-            images_filepaths,
-            k=k,
-        )
+        # For the val split we do not subsample as we want to eval on the same data as in the full
+        downsampled_image_filepaths = images_filepaths
+        if split == "train":
+            downsampled_image_filepaths = random.Random(random_seed).sample(
+                images_filepaths,
+                k=k,
+            )
         downsampled_label_filepaths = [
             labels_split_dir / f"{fp.stem}.txt"
             for fp in downsampled_image_filepaths
