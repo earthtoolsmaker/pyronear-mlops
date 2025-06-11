@@ -124,8 +124,8 @@ stages:
     deps:
     - path: ./data/04_models/yolo/best/
       hash: md5
-      md5: 57c355b09ebfdfec0a814a3bd1a99e37.dir
-      size: 44143913
+      md5: bfc69cb5d25e26e3429335e5dd5dc267.dir
+      size: 44161209
       nfiles: 25
     - path: ./scripts/model/yolo/build_manifest.py
       hash: md5
@@ -134,8 +134,8 @@ stages:
     outs:
     - path: ./data/06_reporting/yolo/best/
       hash: md5
-      md5: 4a0f7ded4c850f0eedf7c20b3d36a005.dir
-      size: 11656
+      md5: 4b55ce0ee53d3adf1d7a4fcb251f53a4.dir
+      size: 11802
       nfiles: 1
   export_yolo_best:
     cmd:
