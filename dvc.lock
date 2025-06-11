@@ -8,9 +8,9 @@ stages:
     deps:
     - path: ./data/01_raw/wildfire
       hash: md5
-      md5: fe129f2ec6008feb67bc91e9428f94ba.dir
-      size: 5811038183
-      nfiles: 104275
+      md5: 70976f1813c2a17e1a40a9bb235ee62c.dir
+      size: 5825615758
+      nfiles: 104633
     - path: ./scripts/data/model_input/build.py
       hash: md5
       md5: a93e0fb5bcc216fb5822dbe7ad2f6ada
@@ -18,9 +18,9 @@ stages:
     outs:
     - path: ./data/03_model_input/wildfire/
       hash: md5
-      md5: da08f5b845b5d205c11cde5b75115fe2.dir
-      size: 6704550320
-      nfiles: 120276
+      md5: 731e8b8742953c54dd4f6279e63e7770.dir
+      size: 6721471866
+      nfiles: 120686
   build_model_input_wildfire:
     cmd:
     - python ./scripts/data/model_input/build.py --input-dir ./data/01_raw/wildfire
@@ -75,9 +75,9 @@ stages:
     deps:
     - path: ./data/03_model_input/wildfire/full/datasets/
       hash: md5
-      md5: b26351a48f025ec8f098a0f21e10aedf.dir
-      size: 5811038202
-      nfiles: 104275
+      md5: 820e82aad197b3840738f09d170d723e.dir
+      size: 5825615777
+      nfiles: 104633
     - path: ./scripts/model/yolo/configs/best.yaml
       hash: md5
       md5: 8650745586fcbef0c3ead9b0ccc1e6ef
@@ -89,8 +89,8 @@ stages:
     outs:
     - path: ./data/04_models/yolo/best
       hash: md5
-      md5: 57c355b09ebfdfec0a814a3bd1a99e37.dir
-      size: 44143913
+      md5: bfc69cb5d25e26e3429335e5dd5dc267.dir
+      size: 44161209
       nfiles: 25
   train_yolo_baseline:
     cmd:
