@@ -8,9 +8,9 @@ stages:
     deps:
     - path: ./data/01_raw/wildfire
       hash: md5
-      md5: 70976f1813c2a17e1a40a9bb235ee62c.dir
-      size: 5825615758
-      nfiles: 104633
+      md5: 7bd9f328e01a620b1d2cd646f29fd465.dir
+      size: 5959538123
+      nfiles: 107205
     - path: ./scripts/data/model_input/build.py
       hash: md5
       md5: a93e0fb5bcc216fb5822dbe7ad2f6ada
@@ -18,9 +18,9 @@ stages:
     outs:
     - path: ./data/03_model_input/wildfire/
       hash: md5
-      md5: 731e8b8742953c54dd4f6279e63e7770.dir
-      size: 6721471866
-      nfiles: 120686
+      md5: 79fc31980fab98dc2c942d8cce2347d3.dir
+      size: 6874627182
+      nfiles: 123652
   build_model_input_wildfire:
     cmd:
     - python ./scripts/data/model_input/build.py --input-dir ./data/01_raw/wildfire
