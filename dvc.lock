@@ -75,9 +75,9 @@ stages:
     deps:
     - path: ./data/03_model_input/wildfire/full/datasets/
       hash: md5
-      md5: 820e82aad197b3840738f09d170d723e.dir
-      size: 5825615777
-      nfiles: 104633
+      md5: 8703aeecf73b5d824c5ab6338db0b6c8.dir
+      size: 5959538142
+      nfiles: 107205
     - path: ./scripts/model/yolo/configs/best.yaml
       hash: md5
       md5: 8650745586fcbef0c3ead9b0ccc1e6ef
@@ -89,8 +89,8 @@ stages:
     outs:
     - path: ./data/04_models/yolo/best
       hash: md5
-      md5: bfc69cb5d25e26e3429335e5dd5dc267.dir
-      size: 44161209
+      md5: 62b8ed6dc76e7b595e269cc43ec85e7f.dir
+      size: 44089968
       nfiles: 25
   train_yolo_baseline:
     cmd:
