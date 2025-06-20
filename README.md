@@ -318,8 +318,8 @@ before running the following script:
 ```sh
 export GITHUB_ACCESS_TOKEN=XXX
 uv run python ./scripts/release.py \
-  --version v1.1.0 \
-  --release-name "artistic alpaca" \
+  --version v3.0.0 \
+  --release-name "colorful chameleon" \
   --github-owner earthtoolsmaker \
   --github-repo pyronear-mlops
 ```
