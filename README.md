@@ -318,10 +318,10 @@ before running the following script:
 ```sh
 export GITHUB_ACCESS_TOKEN=XXX
 uv run python ./scripts/release.py \
-  --version v3.0.0 \
+  --version v3.1.0 \
   --release-name "colorful chameleon" \
   --github-owner earthtoolsmaker \
-  --github-repo pyronear-mlops
+  --github-repo pyro-train
 ```
 
 This will create a new release in the github repository with the model
