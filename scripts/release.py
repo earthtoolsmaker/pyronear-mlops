@@ -5,10 +5,11 @@ CLI script to release the pyronear models.
 import argparse
 import logging
 import os
-import shutil
+import tarfile
 from pathlib import Path
 
 import requests
+import tqdm
 
 from pyronear_mlops.data.utils import yaml_read
 
@@ -155,7 +156,11 @@ def upload_asset(
     # Open the file in binary mode and make the POST request
     with open(filepath_asset, "rb") as file:
         response = requests.post(url, headers=headers, data=file)
-        return response.json()
+        # Check if the request was successful
+        if response.status_code == 201:
+            return response.json()  # Return the JSON response if successful
+        else:
+            response.raise_for_status()  # Raise an error for unsuccessful requests
 
 
 def get_model_name(version: str, release_name: str, filepath_manifest: Path) -> str:
@@ -178,9 +183,18 @@ def create_archive(source_folder: Path, archive_name: str) -> Path:
     """
     # Create a tar.gz archive of the source folder
     archive_path = Path("/tmp") / archive_name
-    shutil.make_archive(
-        str(archive_path).replace(".tar.gz", ""), "gztar", source_folder
-    )
+    with tarfile.open(archive_path, "w:gz") as tar:
+        total_files = sum(len(files) for _, _, files in os.walk(source_folder))
+        with tqdm.tqdm(total=total_files, desc="Creating archive") as pbar:
+            for root, _, files in os.walk(source_folder):
+                for file in files:
+                    tar.add(
+                        os.path.join(root, file),
+                        arcname=os.path.relpath(
+                            os.path.join(root, file), source_folder
+                        ),
+                    )
+                    pbar.update(1)
     return archive_path
 
 
@@ -210,6 +224,8 @@ if __name__ == "__main__":
         logger.info(f"release created: {response_release}")
         logger.info(f"release_id: {release_id}")
         filepath_manifest = Path("./data/06_reporting/yolo/best/manifest.yaml")
+        assert filepath_manifest.exists()
+        logger.info(f"Uploading the manifest.yaml file")
         response_upload_manifest_yaml = upload_asset(
             owner=owner,
             repo=repo,
@@ -251,7 +267,7 @@ if __name__ == "__main__":
                 )
                 filepath_archive.unlink()
 
-        response_upload_manifest_yaml = upload_asset(
+        response_upload_best_model = upload_asset(
             owner=owner,
             repo=repo,
             release_id=release_id,
