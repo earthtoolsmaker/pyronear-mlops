@@ -21,27 +21,6 @@ stages:
       md5: c8833c1c0393ab033b54de34d627394f.dir
       size: 6822123958
       nfiles: 122594
-  build_model_input_wildfire:
-    cmd:
-    - python ./scripts/data/model_input/build.py --input-dir ./data/01_raw/wildfire
-      --output-dir ./data/03_model_input/wildfire/ --random-seed 0 --sampling-ratio
-      0.05 --loglevel info
-    deps:
-    - path: ./data/01_raw/wildfire
-      hash: md5
-      md5: fe129f2ec6008feb67bc91e9428f94ba.dir
-      size: 5811038183
-      nfiles: 104275
-    - path: ./scripts/data/model_input/build.py
-      hash: md5
-      md5: ec2df4b4e3d1462eef5c8e893b195553
-      size: 6527
-    outs:
-    - path: ./data/03_model_input/wildfire/
-      hash: md5
-      md5: 02c0d3d7823f4f42ad045258026c6934.dir
-      size: 6099855615
-      nfiles: 109486
   train_yolo_baseline_small:
     cmd:
     - uv run python ./scripts/model/yolo/train.py --data ./data/03_model_input/wildfire/small/datasets/data.yaml
