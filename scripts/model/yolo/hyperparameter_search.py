@@ -12,8 +12,8 @@ from pathlib import Path
 
 from ultralytics import settings
 
-import pyronear_mlops.model.yolo.hyperparameters.space as hyperparameters
-from pyronear_mlops.model.yolo.train import load_pretrained_model, train
+import pyro_train.model.yolo.hyperparameters.space as hyperparameters
+from pyro_train.model.yolo.train import load_pretrained_model, train
 
 
 def make_cli_parser() -> argparse.ArgumentParser:

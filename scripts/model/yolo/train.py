@@ -10,8 +10,8 @@ from pathlib import Path
 
 from ultralytics import settings
 
-from pyronear_mlops.data.utils import yaml_read
-from pyronear_mlops.model.yolo.train import load_pretrained_model, train
+from pyro_train.data.utils import yaml_read
+from pyro_train.model.yolo.train import load_pretrained_model, train
 
 
 def make_cli_parser() -> argparse.ArgumentParser:

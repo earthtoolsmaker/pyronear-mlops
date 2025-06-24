@@ -9,7 +9,7 @@ import random
 import shutil
 from pathlib import Path
 
-from pyronear_mlops.data.utils import yaml_write
+from pyro_train.data.utils import yaml_write
 
 
 def make_cli_parser() -> argparse.ArgumentParser:

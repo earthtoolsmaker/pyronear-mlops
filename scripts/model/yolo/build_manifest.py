@@ -6,8 +6,8 @@ import argparse
 import logging
 from pathlib import Path
 
-from pyronear_mlops.data.utils import yaml_read, yaml_write
-from pyronear_mlops.utils import compute_file_content_sha256
+from pyro_train.data.utils import yaml_read, yaml_write
+from pyro_train.utils import compute_file_content_sha256
 
 
 def make_cli_parser() -> argparse.ArgumentParser:

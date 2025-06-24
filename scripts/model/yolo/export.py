@@ -9,7 +9,7 @@ from pathlib import Path
 
 from ultralytics import YOLO
 
-from pyronear_mlops.data.utils import yaml_read
+from pyro_train.data.utils import yaml_read
 
 
 def make_cli_parser() -> argparse.ArgumentParser:
