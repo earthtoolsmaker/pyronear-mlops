@@ -1,5 +1,15 @@
 """
 CLI script to release the pyronear models.
+
+Usage:
+    python release.py --version <version> --github-owner <owner> --github-repo <repo> --release-name <name> [-log <loglevel>]
+
+Arguments:
+    --version:        Server version scheme, always incrementing (required).
+    --github-owner:   GitHub Owner (required).
+    --github-repo:    GitHub Repository Name (required).
+    --release-name:   Unique name to reference the models, following the naming convention of an adjective and an animal with the same starting letter (required).
+    -log, --loglevel: Provide logging level (default: warning).
 """
 
 import argparse
