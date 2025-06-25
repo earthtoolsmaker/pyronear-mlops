@@ -5,7 +5,9 @@ CLI script to release the pyronear models.
 import argparse
 import logging
 import os
+import shutil
 import tarfile
+import tempfile
 from pathlib import Path
 
 import requests
@@ -301,22 +303,49 @@ if __name__ == "__main__":
                     f"Making an archive for the export in {export_format} format for the device {export_device}"
                 )
                 archive_name = f"{export_format}_{export_device}_{model_name}.tar.gz"
-                filepath_archive = create_archive(
-                    source_folder=subdir_device,
-                    archive_name=archive_name,
-                )
-                logger.info(
-                    f"Enclosing the archive {filepath_archive} to the release assets"
-                )
-                upload_asset(
-                    owner=owner,
-                    repo=repo,
-                    release_id=release_id,
-                    filepath_asset=filepath_archive,
-                    name=archive_name,
-                    github_access_token=GITHUB_ACCESS_TOKEN,
-                )
-                filepath_archive.unlink()
+                if export_format == "onnx":
+                    temp_folder = Path(tempfile.mkdtemp())
+                    shutil.copytree(src=subdir_device, dst=temp_folder / "onnx")
+                    filepath_model_onnx = temp_folder / "onnx" / "best.onnx"
+                    filepath_model_onnx.rename(
+                        filepath_model_onnx.parent
+                        / f"model_{export_device}_{model_name}.onnx"
+                    )
+                    filepath_archive = create_archive(
+                        source_folder=temp_folder,
+                        archive_name=archive_name,
+                    )
+                    logger.info(
+                        f"Enclosing the archive {filepath_archive} to the release assets"
+                    )
+                    shutil.rmtree(temp_folder)
+                    upload_asset(
+                        owner=owner,
+                        repo=repo,
+                        release_id=release_id,
+                        filepath_asset=filepath_archive,
+                        name=archive_name,
+                        github_access_token=GITHUB_ACCESS_TOKEN,
+                    )
+                    filepath_archive.unlink()
+
+                else:
+                    filepath_archive = create_archive(
+                        source_folder=subdir_device,
+                        archive_name=archive_name,
+                    )
+                    logger.info(
+                        f"Enclosing the archive {filepath_archive} to the release assets"
+                    )
+                    upload_asset(
+                        owner=owner,
+                        repo=repo,
+                        release_id=release_id,
+                        filepath_asset=filepath_archive,
+                        name=archive_name,
+                        github_access_token=GITHUB_ACCESS_TOKEN,
+                    )
+                    filepath_archive.unlink()
 
         response_upload_best_model = upload_asset(
             owner=owner,

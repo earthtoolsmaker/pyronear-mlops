@@ -108,13 +108,14 @@ if __name__ == "__main__":
                 )
             )
 
-        filepath_torchscript = (
-            filepath_weights.parent / f"{filepath_weights.stem}.torchscript"
-        )
-        if filepath_torchscript.exists():
-            shutil.move(
-                src=filepath_torchscript, dst=save_dir / filepath_torchscript.name
-            )
+        # Do not include torchscript
+        # filepath_torchscript = (
+        #     filepath_weights.parent / f"{filepath_weights.stem}.torchscript"
+        # )
+        # if filepath_torchscript.exists():
+        #     shutil.move(
+        #         src=filepath_torchscript, dst=save_dir / filepath_torchscript.name
+        #     )
 
         shutil.move(src=filepath_export, dst=save_dir / filepath_export.name)
         logger.info(f"Model successfully exported to {save_dir} ✅")
