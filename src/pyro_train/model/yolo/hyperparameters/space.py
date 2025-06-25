@@ -8,8 +8,8 @@ from pathlib import Path
 
 import numpy as np
 
-from pyronear_mlops.data.utils import yaml_read
-from pyronear_mlops.model.yolo.utils import (
+from pyro_train.data.utils import yaml_read
+from pyro_train.model.yolo.utils import (
     YOLOModelSize,
     YOLOModelVersion,
     model_version_to_model_type,

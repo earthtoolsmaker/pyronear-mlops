@@ -11,7 +11,7 @@ from pathlib import Path
 import requests
 import tqdm
 
-from pyronear_mlops.data.utils import yaml_read
+from pyro_train.data.utils import yaml_read
 
 
 def make_cli_parser() -> argparse.ArgumentParser:
@@ -63,16 +63,18 @@ def is_valid_version(version: str) -> bool:
 
 def is_valid_release_name(release_name: str) -> bool:
     """
-    Check whether the `release_name` is valid. It should follow this naming
-    convention.
+    Check whether the `release_name` is valid. It must adhere to the following naming
+    convention:
 
-    eg.
-    adjective + animal name starting with the same letter
-    agile armadillo
-    clever cat
-    wise wolf
+    The name should consist of an adjective and an animal name, both starting with the same
+    letter, and separated by a space. The adjective and animal should also follow a specific
+    alphabetical order for each release.
+
+    Examples:
+    - agile armadillo
+    - clever cat
+    - wise wolf
     ...
-
     """
     parts_release_name = release_name.split(" ")
     if not len(parts_release_name) == 2:
@@ -88,11 +90,11 @@ def validate_parsed_args(args: dict) -> bool:
     Return whether the parsed args are valid.
     """
     if not is_valid_version(args["version"]):
-        logging.error(f"invalid --version, should follow semver eg. v1.0.2")
+        logging.error("invalid --version, should follow semver eg. v1.0.2")
         return False
     if not is_valid_release_name(args["release_name"]):
         logging.error(
-            f"invalid --release-name, should follow the release naming convention eg. wise wolf,  v1.0.2"
+            "invalid --release-name, should follow the release naming convention eg. wise wolf,  v1.0.2"
         )
         return False
 
@@ -107,10 +109,22 @@ def create_release(
     github_access_token: str,
 ) -> dict:
     """
-    Create a release using the Github API.
-    Returns the response as a dict.
-    """
+    Create a release using the GitHub API.
 
+    This function creates a new release in the specified GitHub repository and returns the
+    response from the API as a dictionary. The release includes details such as the tag name,
+    target branch, release name, and description.
+
+    Args:
+        owner (str): The owner of the GitHub repository.
+        repo (str): The name of the GitHub repository.
+        version (str): The version tag for the release, following semantic versioning.
+        release_name (str): The name of the release, typically a descriptive title.
+        github_access_token (str): A personal access token for authenticating with the GitHub API.
+
+    Returns:
+        dict: The JSON response from the GitHub API containing information about the created release.
+    """
     url = f"https://api.github.com/repos/{owner}/{repo}/releases"
     body = "Pyronear ML Model for early forest fire detection 🔥"
 
@@ -142,9 +156,24 @@ def upload_asset(
     name: str,
     release_id: int,
     github_access_token: str,
-) -> dict:
+) -> dict | None:
     """
     Upload asset for a given release identified with `release_id`.
+
+    This function uploads an asset to a specific release on GitHub using the provided
+    parameters. It will raise an HTTPError if the upload request fails.
+
+    Args:
+        owner (str): The GitHub owner of the repository.
+        repo (str): The GitHub repository name.
+        filepath_asset (Path): The path to the asset file to be uploaded.
+        name (str): The name to assign to the uploaded asset.
+        release_id (int): The ID of the release to which the asset will be uploaded.
+        github_access_token (str): The GitHub access token for authentication.
+
+    Returns:
+        dict | None: The JSON response from the GitHub API if successful,
+                      or None if the upload fails.
     """
     url = f"https://uploads.github.com/repos/{owner}/{repo}/releases/{release_id}/assets?name={name}"
     headers = {
@@ -165,8 +194,20 @@ def upload_asset(
 
 def get_model_name(version: str, release_name: str, filepath_manifest: Path) -> str:
     """
-    Return the model name which contains the release_name, the version and its
-    associated train data hash.
+    Return the model name, which includes the release name, version, and the
+    associated training data hash. The model name is formatted as:
+    `{model_type}_{formatted_release_name}_{version}_{short_md5_hash}`.
+
+    Args:
+        version (str): The version of the release.
+        release_name (str): The unique name for the model, following the
+                            convention of an adjective and an animal name
+                            starting with the same letter.
+        filepath_manifest (Path): The path to the manifest file containing
+                                  model and data information.
+
+    Returns:
+        str: The formatted model name.
     """
     model_name = release_name.replace(" ", "-")
     manifest = yaml_read(filepath_manifest)
@@ -178,8 +219,18 @@ def get_model_name(version: str, release_name: str, filepath_manifest: Path) -> 
 
 def create_archive(source_folder: Path, archive_name: str) -> Path:
     """
-    Create an archive tar.gz file of the source_folder and using `archive_name`
-    to name it.
+    Create a tar.gz archive of the specified source folder.
+
+    This function compresses all files and subdirectories within the
+    source_folder into a single tar.gz file named `archive_name`.
+    It provides progress feedback during the archiving process.
+
+    Args:
+        source_folder (Path): The path to the folder to be archived.
+        archive_name (str): The name to give to the created archive file.
+
+    Returns:
+        Path: The path to the created archive file.
     """
     # Create a tar.gz archive of the source folder
     archive_path = Path("/tmp") / archive_name
@@ -225,7 +276,7 @@ if __name__ == "__main__":
         logger.info(f"release_id: {release_id}")
         filepath_manifest = Path("./data/06_reporting/yolo/best/manifest.yaml")
         assert filepath_manifest.exists()
-        logger.info(f"Uploading the manifest.yaml file")
+        logger.info("Uploading the manifest.yaml file")
         response_upload_manifest_yaml = upload_asset(
             owner=owner,
             repo=repo,

@@ -1,6 +1,4 @@
-import pytest
-
-from pyronear_mlops.model.yolo.utils import (
+from pyro_train.model.yolo.utils import (
     YOLOModelSize,
     YOLOModelVersion,
     model_version_to_model_type,
@@ -8,7 +6,6 @@ from pyronear_mlops.model.yolo.utils import (
 
 
 def test_model_version_to_model_type():
-
     assert (
         model_version_to_model_type(
             model_version=YOLOModelVersion.version_12,
