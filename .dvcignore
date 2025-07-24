@@ -3,11 +3,5 @@
 # https://dvc.org/doc/user-guide/dvcignore
 #
 # Generated cache files during YOLO ultralytics training
-data/03_model_input/wildfire/small/datasets/val/labels.cache
-data/03_model_input/wildfire/small/datasets/train/labels.cache
-data/03_model_input/wildfire/small/datasets/val/images.cache
-data/03_model_input/wildfire/small/datasets/train/images.cache
-data/03_model_input/wildfire/full/datasets/val/labels.cache
-data/03_model_input/wildfire/full/datasets/train/labels.cache
-data/03_model_input/wildfire/full/datasets/val/images.cache
-data/03_model_input/wildfire/full/datasets/train/images.cache
+labels.cache
+images.cache
