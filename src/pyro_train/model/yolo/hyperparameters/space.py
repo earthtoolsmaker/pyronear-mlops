@@ -206,9 +206,9 @@ def parse_space_yaml(filepath_space: Path) -> HyperparameterSpace:
     try:
         dict_content = yaml_read(filepath_space)
         space = {k: _parse_values(v) for k, v in dict_content.items()}
-        assert set(space.keys()) <= set(
-            ALLOWED_HYPERPARAMETER_SPACE_KEYS
-        ), "Some keys are unsupported!"
+        assert set(space.keys()) <= set(ALLOWED_HYPERPARAMETER_SPACE_KEYS), (
+            "Some keys are unsupported!"
+        )
         return HyperparameterSpace(space=space)
     except Exception as e:
         raise HyperparameterSpaceParsingException from e

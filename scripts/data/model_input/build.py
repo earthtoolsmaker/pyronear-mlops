@@ -125,7 +125,7 @@ def sample_dataset(
     - to: Path - where the image/label comes from
     - from: Path - where the image/label should be copied over - using the provided `output_dir`
     """
-    assert 0 <= sampling_ratio <= 1.0, f"sampling ratio should be between 0 and 1"
+    assert 0 <= sampling_ratio <= 1.0, "sampling ratio should be between 0 and 1"
 
     result = []
     for split in ["train", "val"]:
@@ -168,7 +168,7 @@ def run_file_copy(copy_data: list[dict]) -> None:
     warning is printed and the element is skipped.
     """
     for e in copy_data:
-        if not "from" in e or not "to" in e:
+        if "from" not in e or "to" not in e:
             logging.warning(
                 f"Skipping file copy - Missing `from` key or `to` key from element: {e}"
             )
